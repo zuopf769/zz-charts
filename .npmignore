@@ -1,0 +1,13 @@
+build
+examples
+docs
+dist
+test
+lib
+node_modules
+.babelrc
+.eslintrc.js
+yarn.lock
+yarn-error.log
+npm.lock
+npm-debug.log

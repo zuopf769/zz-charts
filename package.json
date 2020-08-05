@@ -1,0 +1,101 @@
+{
+  "name": "xgfe-vue-charts",
+  "version": "1.0.0",
+  "description": "Vue2.x Charts Components Based ECharts4.x",
+  "main": "lib/uix-charts.common.js",
+  "author": "zuopengei02<zuopengfei02@meituan.com>",
+  "scripts": {
+    "bootstrap": "npm i",
+    "format": "prettier --write \"src/**/*.js\" \"src/**/*.vue\"",
+    "lint": "eslint --ext .js,.ts,.vue src examples",
+    "lint:fix": "npm run lint -- --fix",
+    "commit": "git add -A && npx git-cz",
+    "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s -p && git add CHANGELOG.md"
+  },
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.sankuai.com/~zuopengfei02/xgfe-vue-charts.git"
+  },
+  "keywords": [
+    "Vue",
+    "ECharts",
+    "uix-charts"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "peerDependencies": {
+    "echarts": ">=4.5.0",
+    "vue": ">=2.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/runtime": "^7.11.1",
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "autoprefixer": "^9.8.6",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-istanbul": "^6.0.0",
+    "commitizen": "^4.1.2",
+    "conventional-changelog-cli": "^2.0.34",
+    "copy-webpack-plugin": "^6.0.3",
+    "core-js": "^3.6.5",
+    "cz-conventional-changelog": "^3.2.0",
+    "echarts": "^4.8.0",
+    "eslint": "^7.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^6.2.2",
+    "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
+    "less": "^3.12.2",
+    "less-loader": "^6.2.0",
+    "lint-staged": "^10.2.11",
+    "markdown-it": "^11.0.0",
+    "markdown-it-anchor": "^5.3.0",
+    "markdown-it-chain": "^1.3.0",
+    "markdown-it-container": "^3.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-url": "^8.0.0",
+    "prettier": "^2.0.5",
+    "style-loader": "^1.2.1",
+    "url-loader": "^4.1.0",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.3",
+    "vue-markdown-loader": "^2.4.1",
+    "vue-router": "^3.3.4",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,vue}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "examples/**/*.{js,ts,json,md,vue}": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ]
+  }
+}
