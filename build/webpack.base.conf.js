@@ -1,14 +1,13 @@
 'use strict'
 const path = require('path')
 const config = require('./config')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
-const { pkgName, fullName, isProd } = config
+const { pkgName, fullName } = config
 
 module.exports = {
   resolve: {
@@ -35,7 +34,7 @@ module.exports = {
           },
         ],
         enforce: 'pre',
-        include: [resolve('src'), resolve('test'), resolve('components'), resolve('examples')],
+        include: [resolve('src'), resolve('examples')],
       },
       {
         test: /\.vue$/,
@@ -44,20 +43,19 @@ module.exports = {
             loader: 'vue-loader',
             options: {
               compilerOptions: {
-                whitespace: 'condense',
                 preserveWhitespace: false,
               },
             },
           },
           {
-            loader: '@bfe/vue-source-doc-loader',
+            loader: path.resolve(__dirname, './source-doc-loader/index.js'),
           },
         ],
       },
       {
         test: /\.js$/,
         use: ['babel-loader'],
-        include: [resolve('src'), resolve('test'), resolve('examples'), resolve('components')],
+        include: [resolve('src'), resolve('examples')],
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -68,19 +66,6 @@ module.exports = {
               limit: 100000,
               esModule: false,
               name: 'img/[name].[hash:7].[ext]',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 100000,
-              esModule: false,
-              name: 'media/[name].[hash:7].[ext]',
             },
           },
         ],
@@ -98,77 +83,10 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-              config: {
-                path: resolve('.postcssrc.js'),
-              },
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-              config: {
-                path: resolve('.postcssrc.js'),
-              },
-            },
-          },
-        ],
-      },
     ],
   },
   externals: {
     vue: 'vue',
   },
-  plugins: [
-    new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // all options are optional
-      filename: isProd ? '[name].[hash].css' : '[name].css',
-      chunkFilename: isProd ? '[id].[hash].css' : '[id].css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
-    }),
-  ],
-  devServer: {
-    clientLogLevel: 'warning',
-    historyApiFallback: true,
-    hot: true,
-    contentBase: false, // since we use CopyWebpackPlugin.
-    compress: true,
-    host: '0.0.0.0',
-    port: config.port,
-    open: true,
-    publicPath: '/',
-    // quiet: true, // necessary for FriendlyErrorsPlugin
-  },
+  plugins: [new VueLoaderPlugin()],
 }
