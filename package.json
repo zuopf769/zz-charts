@@ -100,7 +100,7 @@
     ],
     "examples/**/*.{js,ts,json,md,vue}": [
       "prettier --write",
-      "eslint --cache --fix"
+      "eslint --fix"
     ]
   }
 }
