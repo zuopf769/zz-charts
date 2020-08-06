@@ -200,11 +200,14 @@ const demoWebpackConfig = merge(overrideEntryConfig, {
   optimization: {},
   devtool: devtool,
   devServer: {
+    clientLogLevel: 'warning',
+    historyApiFallback: true,
     hot: true,
+    contentBase: false, // since we use CopyWebpackPlugin
     host: host,
     port: port,
     open: true,
-    quiet: true,
+    quiet: true, // necessary for FriendlyErrorsPlugin
     overlay: {
       warnings: true,
       errors: true,

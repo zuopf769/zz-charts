@@ -2,5 +2,7 @@
 /dist/
 /lib/
 /*.js
+/**/*.json
 /src/**/*.md
+/examples/**/*.md
 /test/unit/coverage/

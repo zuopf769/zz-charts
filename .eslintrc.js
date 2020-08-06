@@ -4,8 +4,12 @@ module.exports = {
     browser: true,
     es6: true,
   },
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    ecmaVersion: 6,
+    parser: 'babel-eslint',
+    env: {
+      es6: true,
+    },
     sourceType: 'module',
   },
   plugins: ['prettier', 'vue'],

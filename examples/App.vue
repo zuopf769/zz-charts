@@ -1,22 +1,24 @@
 <template>
   <div id="app">
-    <router-view />
+    <Header />
+    <transition name="fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
 <script>
+import Header from './components/header.vue'
+console.log('xxx', Header)
 export default {
   name: 'App',
+  components: {
+    Header,
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="less">
+@import '~normalize.css/normalize';
+@import '~examples/style/common';
 </style>

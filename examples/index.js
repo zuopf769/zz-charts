@@ -3,6 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Vuep from 'vuep'
+import 'vuep/dist/vuep.css'
+import 'codemirror/theme/neo.css'
+
+Vue.use(Vuep, { theme: 'neo' })
+// or Vue.component('Vuep', Vuep)
 
 Vue.config.productionTip = false
 
