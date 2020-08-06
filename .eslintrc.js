@@ -33,6 +33,7 @@ module.exports = {
     'brace-style': 2,
     'comma-dangle': [2, 'always-multiline'],
     'object-curly-spacing': [2, 'always'],
+    'no-useless-escape': 0,
     'prefer-spread': 0,
     'vue/camelcase': 2,
     'vue/require-component-is': 0,

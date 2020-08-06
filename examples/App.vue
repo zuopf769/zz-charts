@@ -9,7 +9,6 @@
 
 <script>
 import Header from './components/header.vue'
-console.log('xxx', Header)
 export default {
   name: 'App',
   components: {

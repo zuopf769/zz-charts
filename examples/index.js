@@ -5,10 +5,11 @@ import App from './App'
 import router from './router'
 import Vuep from 'vuep'
 import 'vuep/dist/vuep.css'
-import 'codemirror/theme/neo.css'
+import 'codemirror/theme/material.css'
+import DemoBlok from '@examples/components/demo-block'
 
-Vue.use(Vuep, { theme: 'neo' })
-// or Vue.component('Vuep', Vuep)
+Vue.use(Vuep, { theme: 'material' })
+Vue.component('demo-block', DemoBlok)
 
 Vue.config.productionTip = false
 

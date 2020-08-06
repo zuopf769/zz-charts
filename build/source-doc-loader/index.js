@@ -11,25 +11,24 @@ function vueSourceDocLoader(source) {
       if (list.length < 2) {
         return source
       }
-      const startTemplateIndex = source.indexOf('<template>')
-      const endTemplateIndex = source.lastIndexOf('</template>')
-      const content = source.substring(startTemplateIndex, endTemplateIndex)
-      return `
-${source.substring(0, startTemplateIndex)}
+      let result = `
 <template>
- <demo-block>
-        <div slot="source">${content}</template> </div>
-         <highlight-code lang="vue" slot="highlight">
-            <pre>${escapeDoubleCurlyBrace(escapeHTML(source))}</pre>
-         </highlight-code>
-</demo-block>
-</div>
+  <demo-block :code="tooltip"></demo-block>
 </template>
-${source.substring(endTemplateIndex + '</template>'.length)}
+<script>
+let code = ${JSON.stringify(escape(source))};
+export default {
+	data: () => ({
+    tooltip: code
+	})
+}
+</script>
 `
+      return result
     } catch (e) {
       return source
     }
   }
+
   return source
 }

@@ -206,7 +206,7 @@ const demoWebpackConfig = merge(overrideEntryConfig, {
     contentBase: false, // since we use CopyWebpackPlugin
     host: host,
     port: port,
-    open: true,
+    open: false,
     quiet: true, // necessary for FriendlyErrorsPlugin
     overlay: {
       warnings: true,

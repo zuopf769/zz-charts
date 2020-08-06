@@ -5,6 +5,10 @@ function loadWiki(component) {
   return () => import(`../wiki/pc-demo/${component}.md`)
 }
 
+function loadDocs(component) {
+  return () => import(`../../src/packages/${component}/index.md`)
+}
+
 export default [
   {
     name: 'pcDemo',
@@ -14,6 +18,7 @@ export default [
       { path: 'started', component: loadWiki('getting-started') },
       { path: 'usage', component: Test },
       { path: 'options', component: Test },
+      { path: 'bar', component: loadDocs('bar') },
     ],
   },
 ]
