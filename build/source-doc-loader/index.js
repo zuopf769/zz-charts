@@ -1,5 +1,3 @@
-const { escapeHTML, escapeDoubleCurlyBrace } = require('./util')
-
 module.exports = vueSourceDocLoader
 
 function vueSourceDocLoader(source) {
@@ -13,13 +11,13 @@ function vueSourceDocLoader(source) {
       }
       let result = `
 <template>
-  <demo-block :code="tooltip"></demo-block>
+  <demo-block :code="code"></demo-block>
 </template>
 <script>
 let code = ${JSON.stringify(escape(source))};
 export default {
 	data: () => ({
-    tooltip: code
+    code
 	})
 }
 </script>
