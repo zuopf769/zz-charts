@@ -4,7 +4,7 @@
       <slot name="sidebar"></slot>
     </div>
     <div class="page-content">
-      <div class="mk-content">
+      <div class="markdown-content">
         <router-view />
       </div>
     </div>
@@ -45,14 +45,38 @@ export default {
   margin-left: @sidebar-width + 15px;
 }
 
-.mk-content {
-  width: @content-width;
+.markdown-content {
+  width: @content-width-percent;
   padding: 32px 0 20px 0;
   margin: 0 auto;
   box-sizing: content-box;
 }
 
-.mk-content {
+@media (min-width: 1300px) {
+  .markdown-content {
+    max-width: @content-width-960;
+  }
+}
+
+@media (min-width: 1500px) {
+  .markdown-content {
+    max-width: @content-width-1100;
+  }
+}
+
+@media (min-width: 1700px) {
+  .markdown-content {
+    max-width: @content-width-1300;
+  }
+}
+
+@media (min-width: 1900px) {
+  .markdown-content {
+    max-width: @content-width-1200;
+  }
+}
+
+.markdown-content {
   h1,
   h2,
   h3,

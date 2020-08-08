@@ -35,7 +35,7 @@ module.exports = {
           },
         ],
         enforce: 'pre',
-        include: [resolve('src'), resolve('examples')],
+        include: [resolve('src'), resolve('examples'), path.resolve('node_modules/resize-detector')],
       },
       {
         test: /\.vue$/,

@@ -12,6 +12,12 @@ module.exports = {
     },
     sourceType: 'module',
   },
+  globals: {
+    process: 'readonly',
+    require: 'readonly',
+    __dirname: 'readonly',
+    module: 'readonly',
+  },
   plugins: ['prettier', 'vue'],
   extends: [
     'plugin:vue/recommended',
