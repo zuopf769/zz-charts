@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'FadeTransition',
+  name: 'FadeTransition'
 }
 </script>
 <style lang="scss">

@@ -7,8 +7,10 @@ import Vuep from 'vuep'
 import 'vuep/dist/vuep.css'
 import 'codemirror/theme/material.css'
 import DemoBlok from '@examples/components/demo-block'
+import UixCharts from '@/index'
 
 Vue.use(Vuep, { theme: 'material' })
+Vue.use(UixCharts)
 Vue.component('demo-block', DemoBlok)
 
 Vue.config.productionTip = false
@@ -18,5 +20,5 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>',
+  template: '<App/>'
 })

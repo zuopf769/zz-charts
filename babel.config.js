@@ -8,26 +8,26 @@ module.exports = function (api) {
       '@babel/preset-env',
       {
         useBuiltIns: 'usage',
-        corejs: 3,
-      },
-    ],
+        corejs: 3
+      }
+    ]
   ]
 
   const plugins = [
-    '@babel/plugin-transform-runtime',
+    '@babel/plugin-transform-runtime'
   ]
 
   if (isTest) {
     plugins.push([
       'istanbul',
       {
-        include: ['src/**/*'],
-      },
+        include: ['src/**/*']
+      }
     ])
   }
 
   return {
     presets,
-    plugins,
+    plugins
   }
 }

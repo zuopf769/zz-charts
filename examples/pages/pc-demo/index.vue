@@ -15,12 +15,12 @@ export default {
   name: 'PcDemo',
   components: {
     Layout,
-    Sidebar,
+    Sidebar
   },
   data: function () {
     return {
-      navs: navConfig,
+      navs: navConfig
     }
-  },
+  }
 }
 </script>

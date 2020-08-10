@@ -2,27 +2,27 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es6: true,
+    es6: true
   },
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: 'babel-eslint',
     env: {
-      es6: true,
+      es6: true
     },
-    sourceType: 'module',
+    sourceType: 'module'
   },
   globals: {
     process: 'readonly',
     require: 'readonly',
     __dirname: 'readonly',
-    module: 'readonly',
+    module: 'readonly'
   },
   plugins: ['prettier', 'vue'],
   extends: [
     'plugin:vue/recommended',
     'plugin:prettier/recommended', // 使用prettier中的样式规范
-    'eslint:recommended',
+    'eslint:recommended'
   ],
   rules: {
     'prettier/prettier': 'error',
@@ -33,11 +33,11 @@ module.exports = {
     'space-before-function-paren': 0,
     'no-var': 2,
     'no-eval': 2,
+    'comma-dangle': 0,
     'arrow-spacing': 2,
     'block-spacing': 2,
     'key-spacing': 2,
     'brace-style': 2,
-    'comma-dangle': [2, 'always-multiline'],
     'object-curly-spacing': [2, 'always'],
     'no-useless-escape': 0,
     'prefer-spread': 0,
@@ -50,8 +50,8 @@ module.exports = {
       2,
       {
         singleline: 'never',
-        multiline: 'always',
-      },
+        multiline: 'always'
+      }
     ],
     'vue/max-attributes-per-line': 0,
     'vue/html-self-closing': [
@@ -60,12 +60,12 @@ module.exports = {
         html: {
           void: 'always',
           normal: 'never',
-          component: 'always',
+          component: 'always'
         },
         svg: 'always',
-        math: 'always',
-      },
+        math: 'always'
+      }
     ],
-    'vue/no-v-html': 0,
-  },
+    'vue/no-v-html': 0
+  }
 }

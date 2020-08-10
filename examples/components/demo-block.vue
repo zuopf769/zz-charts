@@ -7,13 +7,13 @@ export default {
   props: {
     code: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   computed: {
     template() {
       return unescape(this.code)
-    },
-  },
+    }
+  }
 }
 </script>

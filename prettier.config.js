@@ -5,7 +5,7 @@ module.exports = {
   useTabs: false,
   singleQuote: true,
   semi: false,
-  trailingComma: 'all',
+  trailingComma: 'none',
   bracketSpacing: true,
   jsxBracketSameLine: false,
   arrowParens: 'avoid',
@@ -14,8 +14,8 @@ module.exports = {
     {
       files: ['*.json', '*.config.js'],
       options: {
-        printWidth: 50,
-      },
-    },
-  ],
+        printWidth: 50
+      }
+    }
+  ]
 }

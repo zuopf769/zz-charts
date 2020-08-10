@@ -19,17 +19,25 @@ export default {
     autoresize: Boolean,
     watchShallow: Boolean,
     manualUpdate: Boolean,
-    chartHeight: { type: Number, default: 400 },
+    chartHeight: { type: Number, default: 400 }
   },
   data() {
     return {
-      lastArea: 0,
+      lastArea: 0
+    }
+  },
+  computed: {
+    echartsStyle() {
+      return {
+        width: 'auto',
+        height: `${this.chartHeight}px`
+      }
     }
   },
   watch: {
     group(group) {
       this.chart.group = group
-    },
+    }
   },
   created() {
     this.initOptionsWatcher()
@@ -40,7 +48,7 @@ export default {
         () => {
           this.refresh()
         },
-        { deep: true },
+        { deep: true }
       )
     })
 
@@ -150,8 +158,10 @@ export default {
         const handler = this.$listeners[event]
 
         if (event.indexOf('zr:') === 0) {
+          // expose ECharts instance zrender when click blank on chart as custom event
           chart.getZr().on(event.slice(3), handler)
         } else {
+          // expose ECharts events as custom events
           chart.on(event, handler)
         }
       })
@@ -171,7 +181,7 @@ export default {
             this.lastArea = this.getArea()
           },
           100,
-          { leading: true },
+          { leading: true }
         )
         addListener(this.$el, this.__resizeHandler)
       }
@@ -184,26 +194,26 @@ export default {
           configurable: true,
           get: () => {
             return this.delegateGet('getWidth')
-          },
+          }
         },
         height: {
           configurable: true,
           get: () => {
             return this.delegateGet('getHeight')
-          },
+          }
         },
         isDisposed: {
           configurable: true,
           get: () => {
             return !!this.delegateGet('isDisposed')
-          },
+          }
         },
         computedOptions: {
           configurable: true,
           get: () => {
             return this.delegateGet('getOption')
-          },
-        },
+          }
+        }
       })
 
       this.chart = chart
@@ -231,7 +241,7 @@ export default {
               this.chart.setOption(val, val !== oldVal)
             }
           },
-          { deep: !this.watchShallow },
+          { deep: !this.watchShallow }
         )
       }
     },
@@ -247,7 +257,7 @@ export default {
         this.destroy()
         this.init()
       }
-    },
+    }
   },
   connect(group) {
     if (typeof group !== 'string') {
@@ -267,6 +277,13 @@ export default {
   registerTheme(name, theme) {
     echarts.registerTheme(name, theme)
   },
-  graphic: echarts.graphic,
+  graphic: echarts.graphic
 }
 </script>
+
+<style>
+.echarts {
+  width: 100%;
+  height: 100%;
+}
+</style>

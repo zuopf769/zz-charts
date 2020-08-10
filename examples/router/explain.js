@@ -4,6 +4,6 @@ export default [
   {
     name: 'Explain',
     path: '/explain',
-    component: Explain,
-  },
+    component: Explain
+  }
 ]

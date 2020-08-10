@@ -9,9 +9,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/pc-demo/started',
+      redirect: '/pc-demo/started'
     },
     ...pcDemo,
-    ...explain,
-  ],
+    ...explain
+  ]
 })

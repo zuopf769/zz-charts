@@ -18,7 +18,8 @@ export default [
       { path: 'started', component: loadWiki('getting-started') },
       { path: 'usage', component: Test },
       { path: 'options', component: Test },
-      { path: 'bar', component: loadDocs('bar') },
-    ],
-  },
+      { path: 'line', component: loadDocs('line') },
+      { path: 'bar', component: loadDocs('bar') }
+    ]
+  }
 ]

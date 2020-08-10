@@ -11,7 +11,7 @@
               <router-link
                 :to="{
                   path: `${item.path}`,
-                  query: $route.query,
+                  query: $route.query
                 }"
               >
                 {{ item.cnName }}
@@ -30,9 +30,9 @@ export default {
   props: {
     navs: {
       type: Array,
-      default: () => [],
-    },
-  },
+      default: () => []
+    }
+  }
 }
 </script>
 
