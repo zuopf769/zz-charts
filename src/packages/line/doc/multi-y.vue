@@ -1,5 +1,5 @@
 <template>
-  <uix-line-chart :data="chartData" :settings="chartSettings" :height="340" :series="series" />
+  <uix-line-chart :data="chartData" :settings="chartSettings" :height="340" v-bind="options" />
 </template>
 
 <script>
@@ -23,11 +23,20 @@ export default {
     }
 
     this.chartSettings = {
-      smooth: true,
-      yAxisName: ['销售额', '补贴率']
+      smooth: true
     }
 
-    this.series = [{ type: 'line' }, { type: 'line', yAxisIndex: 1 }]
+    this.options = {
+      yAxis: [
+        {
+          type: 'value'
+        },
+        {
+          type: 'value'
+        }
+      ],
+      series: [{ type: 'line' }, { type: 'line', yAxisIndex: 1 }]
+    }
   }
 }
 </script>

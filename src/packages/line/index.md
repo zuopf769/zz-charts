@@ -11,3 +11,9 @@
 
 :::include(src="./doc/multi.vue")
 :::
+
+
+## 双Y轴折线图
+
+:::include(src="./doc/multi-y.vue")
+:::

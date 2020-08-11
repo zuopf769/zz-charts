@@ -64,7 +64,6 @@ function getLineMeaAxis(args) {
   if (yAxisInterval) axisValue['interval'] = Number(yAxisInterval)
   if (yAxisMax) axisValue['max'] = yAxisMax
   if (yAxisMin) axisValue['min'] = yAxisMin
-
   return axisValue
 }
 

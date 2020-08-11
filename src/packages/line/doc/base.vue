@@ -20,7 +20,7 @@ export default {
 
     this.chartSettings = {
       smooth: true,
-      yAxisName: ['单位:个']
+      yAxisName: '单位:个'
     }
 
     this.title = {
