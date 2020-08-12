@@ -13,12 +13,24 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
+// const externals = [
+//   {
+//     vue: 'vue',
+//     '@/utils': `${fullName}/lib/utils.js`,
+//     '@/core': `${fullName}/lib/core.js`,
+//     '@/constants': `${fullName}/lib/constants.js`
+//   },
+//   function (context, request, callback) {
+//     if (/^echarts|^zrender/.test(request)) {
+//       return callback(null, request)
+//     }
+//     callback()
+//   }
+// ]
+
 const externals = [
   {
-    vue: 'vue',
-    '@/utils': `${fullName}/lib/utils.js`,
-    '@/core': `${fullName}/lib/core.js`,
-    '@/constants': `${fullName}/lib/constants.js`
+    vue: 'vue'
   },
   function (context, request, callback) {
     if (/^echarts|^zrender/.test(request)) {
@@ -30,7 +42,7 @@ const externals = [
 
 // webpack config
 module.exports = merge(baseWebpackConfig, {
-  mode: 'development',
+  mode: 'production',
   entry: Components,
   output: {
     path: resolve('lib'),
@@ -45,13 +57,15 @@ module.exports = merge(baseWebpackConfig, {
       ...utils.styleLoaders({
         sourceMap: cssSourceMap,
         usePostCSS: true,
-        extract: extract
+        extract: false
       })
     ]
   },
   externals: externals,
   optimization: {
     minimize: true,
+    sideEffects: true,
+    concatenateModules: true,
     minimizer: [new TerserPlugin()]
   }
 })

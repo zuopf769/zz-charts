@@ -6,7 +6,7 @@
           <router-link to="/explain">图表指南</router-link>
         </li>
         <li class="nav-list-item">
-          <router-link to="/pcDemo">图表组件</router-link>
+          <router-link to="/pc-demo/started">图表组件</router-link>
         </li>
         <li class="nav-list-item">
           <a target="_blank" href="http://dev.sankuai.com/code/repo-detail/~ZUOPENGFEI02/xgfe-vue-charts">仓库地址</a>

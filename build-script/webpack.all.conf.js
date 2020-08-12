@@ -6,6 +6,7 @@ const utils = require('./utils')
 const config = require('./config')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const { cssSourceMap, extract, devtool } = config
 
@@ -49,6 +50,9 @@ module.exports = merge(baseWebpackConfig, {
     new MiniCssExtractPlugin({
       filename: `${config.pkgName}.css`, // Extract css to a single file
       ignoreOrder: false // Enable to remove warnings about conflicting order
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerPort: 8889
     })
   ],
   externals: externals,

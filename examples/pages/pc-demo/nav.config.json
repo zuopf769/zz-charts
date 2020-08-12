@@ -5,15 +5,15 @@
     "children": [
       {
         "path": "/pc-demo/started",
-        "cnName": "基本介绍"
-      },
-      {
-        "path": "/pc-demo/usage",
         "cnName": "开始使用"
       },
       {
         "path": "/pc-demo/options",
         "cnName": "基本属性"
+      },
+      {
+        "path": "/pc-demo/contributing",
+        "cnName": "贡献指南"
       }
     ]
   },

@@ -1,5 +1,4 @@
 import PcDemo from '@examples/pages/pc-demo/index.vue'
-import Test from '@examples/components/test.vue'
 import components from '../../components'
 console.log(components)
 
@@ -14,8 +13,8 @@ function loadDocs(component) {
 // 基础路由
 let baseRoutes = [
   { path: 'started', component: loadWiki('getting-started') },
-  { path: 'usage', component: Test },
-  { path: 'options', component: Test }
+  { path: 'options', component: loadWiki('getting-started') },
+  { path: 'contributing', component: loadWiki('contributing') }
 ]
 
 // 图表路由
