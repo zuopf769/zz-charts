@@ -10,6 +10,7 @@ function resolve(dir) {
 const { pkgName, fullName } = config
 
 module.exports = {
+  context: path.resolve(__dirname, '../'),
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
@@ -19,8 +20,8 @@ module.exports = {
       examples: resolve('examples'),
       '@test': resolve('test/unit'),
       [fullName]: resolve(''),
-      [pkgName]: resolve(''),
-    },
+      [pkgName]: resolve('')
+    }
   },
   module: {
     rules: [
@@ -30,12 +31,12 @@ module.exports = {
           {
             loader: 'eslint-loader',
             options: {
-              formatter: require('eslint-friendly-formatter'),
-            },
-          },
+              formatter: require('eslint-friendly-formatter')
+            }
+          }
         ],
         enforce: 'pre',
-        include: [resolve('src'), resolve('examples'), path.resolve('node_modules/resize-detector')],
+        include: [resolve('src'), resolve('examples'), path.resolve('node_modules/resize-detector')]
       },
       {
         test: /\.vue$/,
@@ -44,19 +45,19 @@ module.exports = {
             loader: 'vue-loader',
             options: {
               compilerOptions: {
-                preserveWhitespace: false,
-              },
-            },
+                preserveWhitespace: false
+              }
+            }
           },
           {
-            loader: path.resolve(__dirname, './source-doc-loader/index.js'),
-          },
-        ],
+            loader: path.resolve(__dirname, './source-doc-loader/index.js')
+          }
+        ]
       },
       {
         test: /\.js$/,
         use: ['babel-loader'],
-        include: [resolve('src'), resolve('examples')],
+        include: [resolve('src'), resolve('examples'), resolve('node_modules/resize-detector')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -66,10 +67,10 @@ module.exports = {
             options: {
               limit: 100000,
               esModule: false,
-              name: 'img/[name].[hash:7].[ext]',
-            },
-          },
-        ],
+              name: 'img/[name].[hash:7].[ext]'
+            }
+          }
+        ]
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -79,15 +80,12 @@ module.exports = {
             options: {
               limit: 100000,
               esModule: false,
-              name: 'fonts/[name].[hash:7].[ext]',
-            },
-          },
-        ],
-      },
-    ],
+              name: 'fonts/[name].[hash:7].[ext]'
+            }
+          }
+        ]
+      }
+    ]
   },
-  externals: {
-    vue: 'vue',
-  },
-  plugins: [new VueLoaderPlugin()],
+  plugins: [new VueLoaderPlugin()]
 }

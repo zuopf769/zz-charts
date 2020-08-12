@@ -16,7 +16,8 @@ module.exports = {
     process: 'readonly',
     require: 'readonly',
     __dirname: 'readonly',
-    module: 'readonly'
+    module: 'readonly',
+    exports: 'readonly'
   },
   plugins: ['prettier', 'vue'],
   extends: [
@@ -32,7 +33,7 @@ module.exports = {
     // prettier方法名后面会自动去掉空格，为了避免冲突只能
     'space-before-function-paren': 0,
     'no-var': 2,
-    'no-eval': 2,
+    'no-eval': 0,
     'comma-dangle': 0,
     'arrow-spacing': 2,
     'block-spacing': 2,

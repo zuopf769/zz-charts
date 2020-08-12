@@ -1,7 +1,7 @@
 import { cloneDeep, isNull, isEmpty, isUndefined, get } from 'lodash-es'
 
-import { getType } from '@/utils'
-import { color } from '@/constants'
+import { getType } from './utils'
+import { color } from './constants'
 
 // default echarts's component in VeCharts
 import 'echarts/lib/component/title'

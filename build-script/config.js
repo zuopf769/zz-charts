@@ -12,5 +12,5 @@ module.exports = {
   publicPath: isProd ? '/uix-charts/' : '/',
   devtool: isProd ? '#source-map' : 'cheap-module-eval-source-map',
   cssSourceMap: isProd ? false : true,
-  extract: isProd ? true : false,
+  extract: isProd ? true : false
 }

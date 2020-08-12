@@ -1,4 +1,4 @@
-const { isTest } = require('./build/config')
+const { isTest } = require('./build-script/config')
 
 module.exports = function (api) {
   api.cache(true)

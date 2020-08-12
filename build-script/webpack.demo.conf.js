@@ -17,31 +17,31 @@ function resolve(dir) {
 }
 
 const overrideEntryConfig = Object.assign({}, baseWebpackConfig, {
-  externals: {},
+  externals: {}
 })
 
 const demoWebpackConfig = merge(overrideEntryConfig, {
   entry: {
-    docs: resolve('examples/index.js'),
+    docs: resolve('examples/index.js')
   },
   output: {
     path: resolve('dist'),
     filename: isProd ? '[name].[hash:7].js' : '[name].js',
     chunkFilename: isProd ? '[name].[hash:7].js' : '[name].js',
-    publicPath: publicPath,
+    publicPath: publicPath
   },
   module: {
     rules: [
       ...utils.styleLoaders({
         sourceMap: cssSourceMap,
         usePostCSS: true,
-        extract: extract,
+        extract: extract
       }),
       {
         test: /\.md$/,
         use: [
           {
-            loader: 'vue-loader',
+            loader: 'vue-loader'
           },
           {
             loader: 'vue-markdown-loader/lib/markdown-compiler',
@@ -75,8 +75,8 @@ const demoWebpackConfig = merge(overrideEntryConfig, {
                       }
                       // highlight中间的内容不经过这里处理，会填到这里
                       return '</div></demo-block>\n'
-                    },
-                  },
+                    }
+                  }
                 ],
                 [
                   require('markdown-it-container'),
@@ -103,9 +103,9 @@ const demoWebpackConfig = merge(overrideEntryConfig, {
                         }
                       }
                       return ''
-                    },
-                  },
-                ],
+                    }
+                  }
+                ]
               ],
               preprocess: function preprocess(MarkdownIt, source) {
                 MarkdownIt.renderer.rules.table_open = () => '<table class="table">'
@@ -141,7 +141,7 @@ const demoWebpackConfig = merge(overrideEntryConfig, {
                 const scripts = []
                 const components = []
                 if (matches) {
-                  matches.forEach((match, index) => {
+                  matches.forEach(match => {
                     const _match = match.match(/:::\s*include\s*\(([^()]*?)\)/) || ''
                     const params = parseRef(_match)
                     if (params.src) {
@@ -170,12 +170,12 @@ const demoWebpackConfig = merge(overrideEntryConfig, {
                       </script>\n`
                     : '') + source
                 return source
-              },
-            },
-          },
-        ],
-      },
-    ],
+              }
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -187,15 +187,15 @@ const demoWebpackConfig = merge(overrideEntryConfig, {
       template: resolve('examples/index.html'),
       inject: true,
       minify: {
-        collapseWhitespace: true,
-      },
+        collapseWhitespace: true
+      }
     }),
     new FriendlyErrorsPlugin({
       compilationSuccessInfo: {
-        messages: [`Your application is running here: ${host}:${port}`],
+        messages: [`Your application is running here: ${host}:${port}`]
       },
-      onErrors: utils.createNotifierCallback(),
-    }),
+      onErrors: utils.createNotifierCallback()
+    })
   ],
   optimization: {},
   devtool: devtool,
@@ -210,9 +210,9 @@ const demoWebpackConfig = merge(overrideEntryConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     overlay: {
       warnings: true,
-      errors: true,
-    },
-  },
+      errors: true
+    }
+  }
 })
 
 if (isProd) {
@@ -222,7 +222,7 @@ if (isProd) {
       // all options are optional
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
+      ignoreOrder: false // Enable to remove warnings about conflicting order
     })
   )
 
@@ -246,22 +246,22 @@ if (isProd) {
           // 分别代表，初始化时加载、异步加载、两者皆使用
           chunks: 'initial',
           // 代表权重值，值越大，打包优先级越高
-          priority: 10,
+          priority: 10
         },
         'async-vendors': {
           test: /[\\/]node_modules[\\/]/,
           minChunks: 2,
           chunks: 'async',
-          name: 'async-vendors',
-        },
-      },
+          name: 'async-vendors'
+        }
+      }
     },
     // webpack 相关代码打包到一个文件
     // 新模块加入给新模块加一个id
     // 规避长缓存问题
     runtimeChunk: {
-      name: 'runtime',
-    },
+      name: 'runtime'
+    }
   }
 }
 

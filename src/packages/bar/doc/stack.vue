@@ -1,5 +1,5 @@
 <template>
-  <uix-bar-chart :data="chartData" :height="340" />
+  <uix-bar-chart :data="chartData" :settings="chartSettings" :height="340" />
 </template>
 
 <script>
@@ -14,8 +14,18 @@ export default {
         {
           name: 'PV',
           data: [256, 767, 1356, 2087, 803, 582, 432]
+        },
+        {
+          name: 'UV',
+          data: [287, 707, 1756, 1822, 987, 432, 322]
         }
       ]
+    }
+
+    this.chartSettings = {
+      stack: {
+        sum: ['PV', 'UV']
+      }
     }
   }
 }

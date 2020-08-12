@@ -166,5 +166,6 @@ export const line = (data, settings, extra) => {
     series,
     grid
   }
+
   return options
 }

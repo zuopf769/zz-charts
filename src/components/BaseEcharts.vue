@@ -280,10 +280,3 @@ export default {
   graphic: echarts.graphic
 }
 </script>
-
-<style>
-.echarts {
-  width: 100%;
-  height: 100%;
-}
-</style>

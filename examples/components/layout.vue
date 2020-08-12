@@ -140,8 +140,6 @@ export default {
     margin: 0;
     padding-left: 10px;
     border-left: 3px solid @color-line-2;
-
-    margin-top: -30px;
     margin-bottom: 40px;
     color: #969cae;
     line-height: 24px;

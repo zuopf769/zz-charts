@@ -34,8 +34,22 @@ export const color = [
   '#d42d6b'
 ]
 
+export const waterfallConfig = {
+  secondaryMeasure: {
+    normal: {
+      barBorderColor: 'rgba(0,0,0,0)',
+      color: 'rgba(0,0,0,0)'
+    },
+    emphasis: {
+      barBorderColor: 'rgba(0,0,0,0)',
+      color: 'rgba(0,0,0,0)'
+    }
+  }
+}
+
 export default {
   options,
   itemPoint,
-  color
+  color,
+  waterfallConfig
 }

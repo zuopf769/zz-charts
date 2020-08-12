@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import BaseEcharts from '@/components/BaseEcharts.vue'
-import EmptyData from '@/components/EmptyData.vue'
-import LoadingChart from '@/components/LoadingChart.vue'
-import Core from '@/mixins/core'
+import BaseEcharts from './BaseEcharts.vue'
+import EmptyData from './EmptyData.vue'
+import LoadingChart from './LoadingChart.vue'
+import Core from '@/core'
 import { options } from '@/constants'
 export default {
   components: {
