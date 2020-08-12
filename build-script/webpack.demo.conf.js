@@ -21,14 +21,15 @@ const overrideEntryConfig = Object.assign({}, baseWebpackConfig, {
 })
 
 const demoWebpackConfig = merge(overrideEntryConfig, {
+  mode: 'none',
   entry: {
     docs: resolve('examples/index.js')
   },
   output: {
-    path: resolve('dist'),
+    path: resolve('build'),
     filename: isProd ? '[name].[hash:7].js' : '[name].js',
     chunkFilename: isProd ? '[name].[hash:7].js' : '[name].js',
-    publicPath: publicPath
+    publicPath: process.env.PUBLIC_URL
   },
   module: {
     rules: [

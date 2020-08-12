@@ -9,7 +9,7 @@ module.exports = {
   port: 8088,
   isProd: isProd,
   isTest: isTest,
-  publicPath: isProd ? '/uix-charts/' : '/',
+  publicPath: isProd ? process.env.PUBLIC_URL : '/',
   devtool: isProd ? '#source-map' : 'cheap-module-eval-source-map',
   cssSourceMap: isProd ? false : true,
   extract: isProd ? true : false

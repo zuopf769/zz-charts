@@ -1,9 +1,6 @@
-build
+build-script
 examples
-docs
 dist
-test
-lib
 node_modules
 .babelrc
 .eslintrc.js

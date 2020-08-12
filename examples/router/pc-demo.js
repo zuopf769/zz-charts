@@ -1,6 +1,5 @@
 import PcDemo from '@examples/pages/pc-demo/index.vue'
 import components from '../../components'
-console.log(components)
 
 function loadWiki(component) {
   return () => import(`../wiki/pc-demo/${component}.md`)
