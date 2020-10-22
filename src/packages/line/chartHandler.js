@@ -1,4 +1,4 @@
-import { getDataset } from '@/utils'
+import { getDataset, getStackMap, formatMeasure } from '@/utils'
 
 function getLineTooltip(settings) {
   const { tooltipFormatter } = settings
@@ -19,15 +19,11 @@ function getLineLegend(args) {
 }
 
 function getLineDimAxis(args) {
-  const {
-    data: { measures },
-    settings
-  } = args
+  const { settings } = args
   const type = settings.dimAxisType || 'category'
-  const hasBar = !!measures.find(item => (settings.showBar || []).includes(item.name))
   return {
     type,
-    boundaryGap: hasBar,
+    boundaryGap: false,
     axisTick: {
       alignWithLabel: true
     },
@@ -45,7 +41,16 @@ function getLineDimAxis(args) {
 
 function getLineMeaAxis(args) {
   const { settings } = args
-  const { yAxisScale, yAxisName, yAxisInterval, yAxisMax, yAxisMin, percentage = false } = settings
+  const {
+    yAxisScale,
+    yAxisLabelType,
+    yAxisLabelDigits,
+    yAxisName,
+    yAxisInterval,
+    yAxisMax,
+    yAxisMin,
+    percentage = false
+  } = settings
 
   let axisValue = {
     type: 'value',
@@ -55,7 +60,8 @@ function getLineMeaAxis(args) {
     },
     axisLabel: {
       margin: 10,
-      fontWeight: 400
+      fontWeight: 400,
+      formatter: value => formatMeasure(yAxisLabelType, value, yAxisLabelDigits)
     },
     min: percentage ? 0 : null,
     max: percentage ? 1 : null
@@ -69,13 +75,13 @@ function getLineMeaAxis(args) {
 
 // build label
 function getLineLabel(args) {
-  const { position = 'top', ...others } = args
+  const { position = 'top', formatType = 'currency', formatDigits = 0, ...others } = args
   const formatter = params => {
     const { value, seriesIndex } = params
 
     // dataset formatter need shift the value
     value.shift()
-    return value[seriesIndex]
+    return formatMeasure(formatType, value[seriesIndex], formatDigits)
   }
   return {
     position,
@@ -98,31 +104,40 @@ function getLineSeries(args) {
   const {
     label = {},
     lineStyle = {},
-    showBar = [],
     showSymbol = true,
     smooth = false,
     stack = null,
     step = null,
     symbol = 'emptyCircle',
     symbolSize = 4,
+    itemStyle = {},
+    area = false,
+    areaStyle = {},
     ...others
   } = settings
   const series = []
+  const stackMap = stack && getStackMap(stack)
 
   measures.forEach(({ name }) => {
-    series.push({
-      type: showBar.includes(name) ? 'bar' : 'line',
+    let seriesItem = {
+      type: 'line',
       name,
       label: getLineLabel(label),
       lineStyle: getLineStyle(lineStyle),
       showSymbol,
       smooth,
-      stack,
+      stack: stack && stackMap[name],
       step,
       symbol,
       symbolSize,
+      itemStyle: itemStyle[name] ? itemStyle[name] : {},
       ...others
-    })
+    }
+
+    if (area) seriesItem.areaStyle = { normal: {} }
+    if (areaStyle[name]) seriesItem.areaStyle = areaStyle[name]
+
+    series.push(seriesItem)
   })
 
   return series

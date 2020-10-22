@@ -212,6 +212,7 @@ export default {
       }
       // Merge options
       this.options = Object.assign(cloneDeep(this.options), options)
+      console.log('xxx', this.options)
     },
     init() {
       if (this.data) this.dataHandler(this.data)

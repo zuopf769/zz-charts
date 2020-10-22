@@ -4,7 +4,7 @@
       v-if="isHasData"
       :init-options="initOptions"
       :options="options"
-      :auto-resize="true"
+      :autoresize="true"
       :theme="theme"
       :chart-height="height"
       :ec.sync="ec"
@@ -21,7 +21,7 @@
 import BaseEcharts from './BaseEcharts.vue'
 import EmptyData from './EmptyData.vue'
 import LoadingChart from './LoadingChart.vue'
-import Core from '@/core'
+import Core from '@/mixins/core'
 import { options } from '@/constants'
 export default {
   components: {

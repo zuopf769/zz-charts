@@ -22,9 +22,7 @@ export default {
       ]
     }
 
-    this.chartSettings = {
-      smooth: true
-    }
+    this.chartSettings = {}
   }
 }
 </script>

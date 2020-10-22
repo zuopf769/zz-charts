@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import { zip, sum, round, cloneDeep, isNaN, isUndefined } from 'lodash-es'
+import numeral from 'numeral'
+import './formatZhNumber'
 
 const getStackMap = stack => {
   const stackMap = {}
@@ -49,7 +51,6 @@ const getDataset = (data, settings, extra) => {
   const dimensions = {
     [dimKey]: dimValue
   }
-
   let [measures, zipSumed] = [{}, []]
 
   if (stack && percentage && cloneData.measures.length > 0) {
@@ -89,7 +90,28 @@ const getDataset = (data, settings, extra) => {
   return dataset
 }
 
+// format measure
+const formatMeasure = (type, value, digits = 0) => {
+  const transformType = (type, value, digits) => {
+    const digitReg = digits > 0 ? `0.${'0'.repeat(digits)}` : '0'
+    const digitCurReg = digits > 0 ? `0,0.${'0'.repeat(digits)}` : '0,0'
+    switch (type) {
+      case 'currency':
+        return numeral(value).format(digitCurReg)
+      case 'en':
+        return numeral(value).format(`${digitReg}a`)
+      case 'zh':
+        return numeral(value).format(`${digitReg}zh`)
+      case 'percentage':
+        return numeral(value).format(`${digitReg}%`)
+      default:
+        return value
+    }
+  }
+  return transformType(type, value, digits)
+}
+
 // Returns true if the given value is a number, false otherwise.
 const validateNumber = n => !isNaN(parseFloat(n)) && isFinite(n) && Number(n) === n
 
-export { getStackMap, getType, getDataset, validateNumber }
+export { getStackMap, getType, getDataset, validateNumber, formatMeasure }

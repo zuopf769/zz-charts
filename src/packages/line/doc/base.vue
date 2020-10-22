@@ -13,13 +13,12 @@ export default {
       measures: [
         {
           name: '新客数',
-          data: [1130, 2240, 3335, 4450, 2249, 5570]
+          data: [1130, 2240, 1335, 4450, 2249, 5570]
         }
       ]
     }
 
     this.chartSettings = {
-      smooth: true,
       yAxisName: '单位:个'
     }
 

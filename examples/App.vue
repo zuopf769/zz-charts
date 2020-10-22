@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import 'echarts/lib/component/markArea'
 import Header from './components/header.vue'
 export default {
   name: 'App',

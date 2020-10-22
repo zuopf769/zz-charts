@@ -33,10 +33,7 @@ export default {
           name: '单位：%'
         }
       ],
-      series: [
-        { type: 'line', smooth: true },
-        { type: 'line', smooth: true, yAxisIndex: 1 }
-      ]
+      series: [{ type: 'line' }, { type: 'line', yAxisIndex: 1 }]
     }
   }
 }
