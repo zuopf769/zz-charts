@@ -148,6 +148,11 @@ export default {
     margin-top: 0;
   }
 
+  a {
+    text-decoration: underline;
+    color: @color-blue;
+  }
+
   .table {
     width: 100%;
     // table-layout: fixed;

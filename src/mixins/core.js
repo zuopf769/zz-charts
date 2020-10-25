@@ -1,6 +1,7 @@
 import { cloneDeep, isNull, isEmpty, isUndefined, get } from 'lodash-es'
 
 import { getType } from '@/utils'
+import setExtend from '@/utils/extend'
 import { color } from '@/constants'
 
 // default echarts's component in VeCharts
@@ -67,13 +68,16 @@ export default {
     useUTC: { type: Boolean, default: false },
     // uix-charts custom props
     tooltipVisible: { type: Boolean, default: true },
+    tooltipFormatter: { type: Function },
     legendVisible: { type: Boolean, default: true },
     legendPosition: String,
     theme: [String, Object],
     loading: { type: Boolean, default: false },
     emptyText: String,
     renderer: { type: String, default: 'canvas' },
-    height: { type: Number, default: 400 }
+    height: { type: Number, default: 400 },
+    extend: Object,
+    log: Boolean
   },
   data() {
     return {
@@ -136,6 +140,7 @@ export default {
       if (!this.chartHandler || (this.isEmptyData && this.isEmptySeries)) return
       const extra = {
         tooltipVisible: this.tooltipVisible,
+        tooltipFormatter: this.tooltipFormatter,
         legendVisible: this.legendVisible,
         isEmptyData: this.isEmptyData,
         isEmptySeries: this.isEmptySeries,
@@ -212,7 +217,9 @@ export default {
       }
       // Merge options
       this.options = Object.assign(cloneDeep(this.options), options)
-      console.log('xxx', this.options)
+      // change inited echarts settings
+      if (this.extend) setExtend(this.options, this.extend)
+      if (this.log) console.log(this.options)
     },
     init() {
       if (this.data) this.dataHandler(this.data)

@@ -26,7 +26,7 @@ export default {
       ]
     }
     this.chartSettings = {
-      yAxisLabelType: 'zh'
+      yAxisLabelType: ['zh']
     }
   }
 }

@@ -19,7 +19,8 @@ export default {
     }
 
     this.chartSettings = {
-      yAxisName: ['单位/个']
+      yAxisName: ['单位/个'],
+      smooth: true
     }
   }
 }

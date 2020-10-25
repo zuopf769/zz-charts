@@ -96,7 +96,7 @@ const formatMeasure = (type, value, digits = 0) => {
     const digitReg = digits > 0 ? `0.${'0'.repeat(digits)}` : '0'
     const digitCurReg = digits > 0 ? `0,0.${'0'.repeat(digits)}` : '0,0'
     switch (type) {
-      case 'currency':
+      case 'normal':
         return numeral(value).format(digitCurReg)
       case 'en':
         return numeral(value).format(`${digitReg}a`)

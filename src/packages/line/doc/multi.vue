@@ -1,5 +1,5 @@
 <template>
-  <uix-line-chart :data="chartData" :settings="chartSettings" :height="340" />
+  <uix-line-chart :data="chartData" :height="340" />
 </template>
 
 <script>
@@ -17,12 +17,10 @@ export default {
         },
         {
           name: '上月同期合作客户数',
-          data: [1121, 2190, 3135, 3450, 3249, 3870]
+          data: [1121, 3190, 3135, 3450, 3249, 3870]
         }
       ]
     }
-
-    this.chartSettings = {}
   }
 }
 </script>

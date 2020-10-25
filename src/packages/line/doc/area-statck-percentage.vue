@@ -1,5 +1,11 @@
 <template>
-  <uix-line-chart :data="chartData" :settings="chartSettings" :height="340" />
+  <uix-line-chart
+    :data="chartData"
+    :settings="chartSettings"
+    :tooltip-formatter="tooltipFormatter"
+    :log="true"
+    :height="340"
+  />
 </template>
 
 <script>
@@ -25,22 +31,24 @@ export default {
         }
       ]
     }
+
     this.chartSettings = {
       stack: {
         lang: ['Vue', 'React', 'Angular']
       },
       area: true,
-      yAxisLabelType: 'percentage',
-      percentage: true,
-      tooltipFormatter: function (params) {
-        let [tar] = params
-        const tooltipContent = params
-          .map(v => {
-            return `${v.seriesName}：${(v.value[v.seriesIndex + 1] * 100).toFixed(2)} %`
-          })
-          .join('<br/>')
-        return tar.name + '<br/>' + tooltipContent
-      }
+      yAxisLabelType: ['percentage'],
+      percentage: true
+    }
+
+    this.tooltipFormatter = params => {
+      let [tar] = params
+      const tooltipContent = params
+        .map(v => {
+          return `${v.seriesName}：${(v.value[v.seriesIndex + 1] * 100).toFixed(2)} %`
+        })
+        .join('<br/>')
+      return tar.name + '<br/>' + tooltipContent
     }
   }
 }

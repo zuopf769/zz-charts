@@ -7,6 +7,11 @@
 :::include(src="./doc/base.vue")
 :::
 
+## 折线图设置-平滑曲线
+
+:::include(src="./doc/smooth.vue")
+:::
+
 ## 多条折线图
 
 :::include(src="./doc/multi.vue")
@@ -15,6 +20,21 @@
 ## 双 Y 轴折线图
 
 :::include(src="./doc/multi-y.vue")
+:::
+
+## 三 Y 轴折线图
+
+:::include(src="./doc/multi-y-third.vue")
+:::
+
+## Y 轴格式化
+
+:::include(src="./doc/label-type-y-zh.vue")
+:::
+
+## tooltipFormater
+
+:::include(src="./doc/tooltip-formatter.vue")
 :::
 
 ## 区域折线图
@@ -30,11 +50,6 @@
 ## 百分比堆叠面积图
 
 :::include(src="./doc/area-statck-percentage.vue")
-:::
-
-## Y 轴格式化
-
-:::include(src="./doc/label-type-y-zh.vue")
 :::
 
 ## 阶梯折线图
@@ -54,6 +69,7 @@
 
 ## settings 配置项
 
-| 配置项 | 说明             | 类型    | 可选值     | 用法  | 其他 |
-| ------ | ---------------- | ------- | ---------- | ----- | ---- |
-| smooth | 是否平滑曲线显示 | Boolean | true/false | false | -    |
+| 配置项    | 说明             | 类型    | 可选值     | 用法                                                             | 其他                                                   |
+| --------- | ---------------- | ------- | ---------- | ---------------------------------------------------------------- | ------------------------------------------------------ |
+| smooth    | 是否平滑曲线显示 | Boolean | true/false | false                                                            | -                                                      |
+| yAxisName | 左右侧坐标轴标题 | Array   | -          | 参见[文档](https://echarts.apache.org/zh/option.html#yAxis.name) | 依次表示左边第一个轴、右边第一个轴、右边第二个轴的名称 |

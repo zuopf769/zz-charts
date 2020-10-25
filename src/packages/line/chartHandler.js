@@ -1,16 +1,49 @@
 import { getDataset, getStackMap, formatMeasure } from '@/utils'
+import { isArray } from 'lodash-es'
 
-function getLineTooltip(settings) {
-  const { tooltipFormatter } = settings
+function getLineTooltip(settings, extra) {
+  const {
+    yAxisLabelType = ['normal', 'normal', 'normal'],
+    yAxisLabelDigits = 0,
+    secondMeaAxis = [],
+    thirdMeaAxis = []
+  } = settings
+
+  let { tooltipFormatter } = extra
   return {
     trigger: 'axis',
-    formatter: tooltipFormatter
+    confine: true,
+    formatter(items) {
+      if (tooltipFormatter) {
+        return tooltipFormatter.apply(null, arguments)
+      }
+      let tpl = []
+      const { name, axisValueLabel } = items[0]
+      const title = name || axisValueLabel
+      tpl.push(`${title}<br>`)
+      items.forEach(({ seriesName, data, seriesIndex, marker }) => {
+        let showData = null
+        const itemData = isArray(data) ? data[seriesIndex + 1] : data
+        let type = 'normal'
+        if (~secondMeaAxis.indexOf(seriesName)) {
+          type = yAxisLabelType[1] || 'noraml'
+        }
+        if (~thirdMeaAxis.indexOf(seriesName)) {
+          type = yAxisLabelType[2] || 'normal'
+        }
+        showData = formatMeasure(type, itemData, yAxisLabelDigits)
+        tpl.push(marker)
+        tpl.push(`${seriesName}: ${showData}`)
+        tpl.push('<br>')
+      })
+      return tpl.join('')
+    }
   }
 }
 
 function getLineLegend(args) {
   const { settings } = args
-  const { legendType = 'plain', legendPadding = 5, selectedMode = false } = settings
+  const { legendType = 'plain', legendPadding = 5, selectedMode = true } = settings
   return {
     type: legendType,
     padding: legendPadding,
@@ -20,20 +53,22 @@ function getLineLegend(args) {
 
 function getLineDimAxis(args) {
   const { settings } = args
-  const type = settings.dimAxisType || 'category'
+  const type = settings.xAxisType || 'category'
   return {
     type,
     boundaryGap: false,
     axisTick: {
-      alignWithLabel: true
+      alignWithLabel: true,
+      inside: true
     },
     axisLabel: {
       margin: 10,
-      fontWeight: 400
+      fontWeight: 400,
+      color: '#666666'
     },
     axisLine: {
       lineStyle: {
-        color: '#585A7D'
+        color: '#EEEEEE'
       }
     }
   }
@@ -42,47 +77,82 @@ function getLineDimAxis(args) {
 function getLineMeaAxis(args) {
   const { settings } = args
   const {
-    yAxisScale,
-    yAxisLabelType,
+    secondMeaAxis = [],
+    thirdMeaAxis = [],
+    yAxisScale = [],
+    yAxisLabelType = [],
     yAxisLabelDigits,
-    yAxisName,
+    yAxisName = [],
     yAxisInterval,
     yAxisMax,
     yAxisMin,
-    percentage = false
+    percentage
   } = settings
 
-  let axisValue = {
-    type: 'value',
-    scale: yAxisScale,
-    axisTick: {
-      show: false
-    },
-    axisLabel: {
-      margin: 10,
-      fontWeight: 400,
-      formatter: value => formatMeasure(yAxisLabelType, value, yAxisLabelDigits)
-    },
-    min: percentage ? 0 : null,
-    max: percentage ? 1 : null
+  let meaAxisLength = secondMeaAxis.length ? 2 : 1
+  meaAxisLength = secondMeaAxis.length && thirdMeaAxis.length ? 3 : meaAxisLength
+
+  let yAxis = []
+  for (let i = 0; i < meaAxisLength; i++) {
+    let yAxisBase = {
+      type: 'value',
+      axisLine: {
+        show: false
+      },
+      axisTick: {
+        show: false
+      },
+      axisLabel: {
+        color: '#666666'
+      },
+      nameTextStyle: {
+        color: '#999999',
+        fontWeight: 600
+      },
+      splitLine: {
+        lineStyle: {
+          color: '#EEEEEE',
+          type: 'dotted'
+        }
+      },
+      min: percentage ? 0 : null,
+      max: percentage ? 1 : null
+    }
+    if (yAxisLabelType[i]) {
+      yAxis[i] = Object.assign({}, yAxisBase, {
+        axisLabel: {
+          formatter: value => formatMeasure(yAxisLabelType[i], value, yAxisLabelDigits)
+        }
+      })
+    } else {
+      yAxis[i] = Object.assign({}, yAxisBase)
+    }
+    yAxis[i]['name'] = yAxisName[i] || ''
+    yAxis[i]['scale'] = yAxisScale[i] || false
+    if (yAxisInterval) {
+      yAxis[i]['interval'] = Number(yAxisInterval)
+    }
+    yAxis[i]['max'] = yAxisMax
+    yAxis[i]['min'] = yAxisMin
+    if (i === 2) {
+      yAxis[i]['offset'] = 60
+    }
   }
-  if (yAxisName) axisValue['name'] = yAxisName
-  if (yAxisInterval) axisValue['interval'] = Number(yAxisInterval)
-  if (yAxisMax) axisValue['max'] = yAxisMax
-  if (yAxisMin) axisValue['min'] = yAxisMin
-  return axisValue
+
+  return yAxis
 }
 
 // build label
 function getLineLabel(args) {
   const { position = 'top', formatType = 'currency', formatDigits = 0, ...others } = args
+
   const formatter = params => {
     const { value, seriesIndex } = params
-
     // dataset formatter need shift the value
     value.shift()
     return formatMeasure(formatType, value[seriesIndex], formatDigits)
   }
+
   return {
     position,
     formatter,
@@ -98,6 +168,15 @@ function getLineStyle(args) {
   }
 }
 
+function getItemStyle(args) {
+  const { borderColor = '#FFFFF', borderWidth = 1, ...others } = args
+  return {
+    borderColor,
+    borderWidth,
+    ...others
+  }
+}
+
 function getLineSeries(args) {
   const { data, settings } = args
   const { measures } = data
@@ -108,12 +187,13 @@ function getLineSeries(args) {
     smooth = false,
     stack = null,
     step = null,
-    symbol = 'emptyCircle',
-    symbolSize = 4,
+    symbol = 'circle',
+    symbolSize = 6,
     itemStyle = {},
     area = false,
     areaStyle = {},
-    ...others
+    secondMeaAxis = [],
+    thirdMeaAxis = []
   } = settings
   const series = []
   const stackMap = stack && getStackMap(stack)
@@ -130,12 +210,24 @@ function getLineSeries(args) {
       step,
       symbol,
       symbolSize,
-      itemStyle: itemStyle[name] ? itemStyle[name] : {},
-      ...others
+      itemStyle: getItemStyle(itemStyle)
     }
 
-    if (area) seriesItem.areaStyle = { normal: {} }
-    if (areaStyle[name]) seriesItem.areaStyle = areaStyle[name]
+    if (area) {
+      seriesItem.areaStyle = { normal: {} }
+    }
+
+    if (areaStyle[name]) {
+      seriesItem.areaStyle = areaStyle[name]
+    }
+
+    if (secondMeaAxis.length && ~secondMeaAxis.indexOf(name)) {
+      seriesItem.yAxisIndex = 1
+    }
+
+    if (thirdMeaAxis.length && ~thirdMeaAxis.indexOf(name)) {
+      seriesItem.yAxisIndex = 2
+    }
 
     series.push(seriesItem)
   })
@@ -143,13 +235,12 @@ function getLineSeries(args) {
   return series
 }
 
-function getGrid({ grid = {} }) {
+function getGrid() {
   return {
     right: 10,
     bottom: 10,
     left: 10,
-    containLabel: true,
-    ...grid
+    containLabel: true
   }
 }
 
@@ -159,7 +250,7 @@ export const line = (data, settings, extra) => {
   extra.chartType = 'line'
   const dataset = !isEmptyData && getDataset(data, settings, extra)
 
-  const tooltip = tooltipVisible && getLineTooltip(settings)
+  const tooltip = tooltipVisible && getLineTooltip(settings, extra)
 
   const legend = legendVisible && getLineLegend({ settings })
 
