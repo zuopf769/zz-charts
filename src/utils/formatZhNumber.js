@@ -6,7 +6,6 @@ numeral.register('format', 'zh-number', {
     unformat: /(zh)/
   },
   format: function (value, format) {
-    console.log(numeral._, format)
     // 判断是否有空格
     const space = numeral._.includes(format, ' zh') ? ' ' : ''
     // match 数据格式

@@ -86,7 +86,7 @@ function getLineMeaAxis(args) {
     yAxisInterval,
     yAxisMax,
     yAxisMin,
-    percentage
+    percentage = false
   } = settings
 
   let meaAxisLength = secondMeaAxis.length ? 2 : 1
@@ -132,8 +132,10 @@ function getLineMeaAxis(args) {
     if (yAxisInterval) {
       yAxis[i]['interval'] = Number(yAxisInterval)
     }
-    yAxis[i]['max'] = yAxisMax
-    yAxis[i]['min'] = yAxisMin
+    if (!percentage) {
+      yAxis[i]['max'] = yAxisMax
+      yAxis[i]['min'] = yAxisMin
+    }
     if (i === 2) {
       yAxis[i]['offset'] = 60
     }

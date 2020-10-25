@@ -5,7 +5,6 @@
     :extend="chartExtend"
     :tooltip-formatter="tooltipFormatter"
     :height="340"
-    :log="true"
   />
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <uix-line-chart :data="chartData" :settings="chartSettings" :extend="chartExtend" :height="340" :log="true" />
+  <uix-line-chart :data="chartData" :settings="chartSettings" :extend="chartExtend" :height="340" />
 </template>
 
 <script>
