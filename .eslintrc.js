@@ -27,7 +27,7 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'array-bracket-spacing': 2,
     // prettier方法名后面会自动去掉空格，为了避免冲突只能

@@ -39,7 +39,6 @@ numeral.register('format', 'zh-number', {
     return cnNumberFormat(value, digits)
   },
   unformat: function (string) {
-    debugger
     return numeral._.stringToNumber(string) * 0.01
   }
 })
