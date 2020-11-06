@@ -1,8 +1,13 @@
-import { getDataset } from '@/utils'
+import { getDataset, formatMeasure } from '@/utils'
+
+const pieRadius = [0, '70%']
+const donutRadius = ['50%', '70%']
+const pieOffsetY = '50%'
 
 function getPieDataset(data, settings, extra) {
   const dataset = []
   extra.chartType = 'pie'
+  // 环形饼图
   if (data.length > 1) {
     for (let element of data) {
       dataset.push(getDataset(element, settings, extra))
@@ -13,9 +18,24 @@ function getPieDataset(data, settings, extra) {
   return dataset
 }
 
-function getPieTooltip() {
+function getPieTooltip(settings, extra) {
+  const { dataType = 'normal', digit = 0 } = settings
+  let { tooltipFormatter } = extra
+
   return {
-    trigger: 'item'
+    trigger: 'item',
+    confine: true,
+    formatter(item) {
+      if (tooltipFormatter) {
+        return tooltipFormatter.apply(null, arguments)
+      }
+      let tpl = []
+      tpl.push(item.marker)
+      tpl.push(`${item.name}:`)
+      tpl.push(formatMeasure(dataType, item.value[1], digit))
+      tpl.push(`(${item.percent}%)`)
+      return tpl.join(' ')
+    }
   }
 }
 
@@ -51,18 +71,40 @@ function getPieSeries(args) {
 function handleData(data, settings, isDonut, datasetIndex = 0) {
   const series = []
   const { measures } = data
-  const { offsetY, radius = isDonut ? ['50%', '70%'] : [0, '75%'], selectedMode = false, ...others } = settings
+  const {
+    selectedMode = false,
+    hoverAnimation = true,
+    roseType = false,
+    offsetY = pieOffsetY,
+    radius = isDonut ? donutRadius : pieRadius,
+    label,
+    labelLine,
+    itemStyle,
+    ...others
+  } = settings
 
   measures.forEach(({ name }) => {
-    series.push({
+    let seriesItem = {
       type: 'pie',
       name,
       selectedMode,
-      center: offsetY ? ['50%', offsetY] : ['50%', '50%'],
+      hoverAnimation,
+      roseType,
+      center: ['50%', offsetY],
       radius,
       datasetIndex,
       ...others
-    })
+    }
+    if (label) {
+      seriesItem.label = label
+    }
+    if (labelLine) {
+      seriesItem.labelLine = labelLine
+    }
+    if (itemStyle) {
+      seriesItem.itemStyle = itemStyle
+    }
+    series.push(seriesItem)
   })
   return series
 }
@@ -72,7 +114,7 @@ export const pie = (data, settings, extra, isDonut) => {
 
   const dataset = getPieDataset(data, settings, extra)
 
-  const tooltip = tooltipVisible && getPieTooltip()
+  const tooltip = tooltipVisible && getPieTooltip(settings, extra)
 
   const legend = legendVisible && getPieLegend({ settings })
 

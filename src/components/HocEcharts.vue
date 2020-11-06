@@ -5,7 +5,7 @@
       :init-options="initOptions"
       :options="options"
       :autoresize="true"
-      :theme="theme"
+      :theme="chartTheme"
       :chart-height="height"
       :ec.sync="ec"
       v-on="$listeners"

@@ -239,9 +239,8 @@ function getLineSeries(args) {
 
 function getGrid() {
   return {
-    right: 10,
-    bottom: 10,
     left: 10,
+    right: 10,
     containLabel: true
   }
 }

@@ -1,11 +1,5 @@
 <template>
-  <uix-line-chart
-    :data="chartData"
-    :settings="chartSettings"
-    :tooltip-formatter="tooltipFormatter"
-    :log="true"
-    :height="340"
-  />
+  <uix-line-chart :data="chartData" :settings="chartSettings" :tooltip-formatter="tooltipFormatter" :height="340" />
 </template>
 
 <script>

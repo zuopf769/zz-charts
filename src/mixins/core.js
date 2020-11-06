@@ -2,7 +2,7 @@ import { cloneDeep, isNull, isEmpty, isUndefined, get } from 'lodash-es'
 
 import { getType } from '@/utils'
 import setExtend from '@/utils/extend'
-import { color } from '@/constants'
+import { DEFAULT_THEME, DEFAULT_COLORS } from '@/constants'
 
 // default echarts's component in VeCharts
 import 'echarts/lib/component/title'
@@ -70,8 +70,9 @@ export default {
     tooltipVisible: { type: Boolean, default: true },
     tooltipFormatter: { type: Function },
     legendVisible: { type: Boolean, default: true },
-    legendPosition: String,
-    theme: [String, Object],
+    legendPosition: { type: String, default: 'bottom' },
+    theme: Object,
+    themeName: String,
     loading: { type: Boolean, default: false },
     emptyText: String,
     renderer: { type: String, default: 'canvas' },
@@ -88,7 +89,10 @@ export default {
   },
   computed: {
     chartColor() {
-      return this.theme ? this.color : this.color || color
+      return this.color || (this.theme && this.theme.color) || DEFAULT_COLORS
+    },
+    chartTheme() {
+      return this.themeName || this.theme || DEFAULT_THEME
     },
     isEmptyData() {
       if (isNull(this.data) || isEmpty(this.data) || isUndefined(this.data)) {
@@ -159,13 +163,16 @@ export default {
       }
     },
     optionsHandler(options) {
+      // color
       options.color = this.chartColor
+
       // handle legend
       if (this.legendPosition && options.legend) {
-        const position = this.legendPosition.split('-').shift()
-        options.legend.left = this.legendPosition.split('-').pop()
-        if (['top'].indexOf(position) !== -1) options.legend.top = 0
-        if (['bottom'].indexOf(position) !== -1) options.legend.bottom = 0
+        options.legend[this.legendPosition] = 10
+        if (~['left', 'right'].indexOf(this.legendPosition)) {
+          options.legend.top = 'middle'
+          options.legend.orient = 'vertical'
+        }
       }
       const echartsSettings = [
         'title',
