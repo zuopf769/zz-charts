@@ -32,6 +32,10 @@
       {
         "path": "/pc-demo/pie",
         "cnName": "饼图"
+      },
+      {
+        "path": "/pc-demo/donut",
+        "cnName": "环形图"
       }
     ]
   }

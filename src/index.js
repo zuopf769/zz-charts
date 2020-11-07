@@ -1,8 +1,9 @@
 import UixLineChart from './packages/line'
 import UixBarChart from './packages/bar'
 import UixPieChart from './packages/pie'
+import UixDonutChart from './packages/donut'
 
-const components = [UixLineChart, UixBarChart, UixPieChart]
+const components = [UixLineChart, UixBarChart, UixPieChart, UixDonutChart]
 
 const install = Vue => {
   if (install.installed) return
@@ -22,5 +23,6 @@ export default {
   install,
   UixLineChart,
   UixBarChart,
-  UixPieChart
+  UixPieChart,
+  UixDonutChart
 }
