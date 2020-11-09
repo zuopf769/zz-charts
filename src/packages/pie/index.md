@@ -20,11 +20,6 @@
 :::include(src="./doc/legend-position.vue")
 :::
 
-## 设置中心点的偏移量
-
-:::include(src="./doc/offset-y.vue")
-:::
-
 ## 设置 label
 
 :::include(src="./doc/label.vue")

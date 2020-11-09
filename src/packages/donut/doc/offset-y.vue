@@ -16,6 +16,8 @@ export default {
         hoverAnimation: false,
         selectedMode: 'single',
         selectedValue: 40000,
+        radius: ['30%', '50%'],
+        offsetY: 100,
         label: {
           show: false
         }

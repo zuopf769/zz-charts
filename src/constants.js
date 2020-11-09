@@ -22,7 +22,8 @@ export const DEFAULT_THEME = {
   legend: {
     textStyle: {
       color: contrastColor
-    }
+    },
+    pageIconSize: 8
   },
   pie: {
     itemStyle: {

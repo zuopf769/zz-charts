@@ -9,7 +9,6 @@ import echartsLib from 'echarts/lib/echarts'
 import 'echarts/lib/component/title'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/grid'
-import 'echarts/lib/component/legend'
 import 'echarts/lib/component/legendScroll'
 import 'echarts/lib/component/dataset'
 import 'echarts/lib/component/graphic'
@@ -147,6 +146,7 @@ export default {
         tooltipVisible: this.tooltipVisible,
         tooltipFormatter: this.tooltipFormatter,
         legendVisible: this.legendVisible,
+        legendPosition: this.legendPosition,
         isEmptyData: this.isEmptyData,
         isEmptySeries: this.isEmptySeries,
         _once: this._once

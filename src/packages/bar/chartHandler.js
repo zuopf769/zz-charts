@@ -20,7 +20,7 @@ function getBarLegend(data, settings) {
   const { measures } = data
   const { legendType, legendPadding, waterfall } = settings
   let result = {
-    type: legendType || 'plain',
+    type: legendType || 'scroll',
     padding: legendPadding || 5
   }
 

@@ -43,7 +43,7 @@ function getLineTooltip(settings, extra) {
 
 function getLineLegend(args) {
   const { settings } = args
-  const { legendType = 'plain', legendPadding = 5, selectedMode = true } = settings
+  const { legendType = 'scroll', legendPadding = 5, selectedMode = true } = settings
   return {
     type: legendType,
     padding: legendPadding,

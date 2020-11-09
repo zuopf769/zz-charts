@@ -2,7 +2,9 @@ import { getDataset, formatMeasure } from '@/utils'
 
 const pieRadius = [0, '70%']
 const donutRadius = ['50%', '70%']
-const pieOffsetY = '50%'
+const pieCenter = ['40%', '50%']
+const pieCenter2 = ['50%', '50%']
+
 // 环形图中心显示标签
 const donutLabel = {
   normal: {
@@ -14,6 +16,22 @@ const donutLabel = {
     fontSize: 20,
     color: '#222222'
   }
+}
+
+function getDefaultCenter(extra) {
+  let { legendPosition } = extra
+  console.log('22222', legendPosition)
+  let defaultCenter = pieCenter
+  if (~['top', 'bottom'].indexOf(legendPosition)) {
+    defaultCenter = pieCenter2
+  }
+  return defaultCenter
+}
+
+function getCenter(settings, extra) {
+  let { center } = settings
+  if (center) return center
+  return getDefaultCenter(extra)
 }
 
 function getPieDataset(data, settings, extra) {
@@ -53,7 +71,7 @@ function getPieTooltip(settings, extra, isDonut) {
 
 function getPieLegend(args) {
   const { settings } = args
-  const { legendType = 'plain', legendPadding = 5 } = settings
+  const { legendType = 'scroll', legendPadding = 5 } = settings
   return {
     type: legendType,
     padding: legendPadding
@@ -61,33 +79,33 @@ function getPieLegend(args) {
 }
 
 function getPieSeries(args) {
-  const { data, settings, isDonut } = args
+  const { data, settings, extra, isDonut } = args
 
   let series = []
 
   if (data.length === undefined) {
-    series = handleData(data, settings, isDonut)
+    series = handleData(data, settings, extra, isDonut)
   } else if (data.length === 1) {
-    series = handleData(data[0], settings, isDonut)
+    series = handleData(data[0], settings, extra, isDonut)
   } else {
     // 一般是配置两项
     for (let index in data) {
       if (Object.prototype.hasOwnProperty.call(data, index)) {
-        series.push(handleData(data[index], settings[index], isDonut, index)[0])
+        series.push(handleData(data[index], settings[index], extra, isDonut, index)[0])
       }
     }
   }
   return series
 }
 
-function handleData(data, settings, isDonut, datasetIndex = 0) {
+function handleData(data, settings, extra, isDonut, datasetIndex = 0) {
   const series = []
   const { dimensions, measures } = data
   const {
     selectedMode = false,
     hoverAnimation = true,
     roseType = false,
-    offsetY = pieOffsetY,
+    center = getDefaultCenter(extra),
     radius = isDonut ? donutRadius : pieRadius,
     label = isDonut ? donutLabel : {},
     labelLine,
@@ -101,7 +119,7 @@ function handleData(data, settings, isDonut, datasetIndex = 0) {
       selectedMode,
       hoverAnimation,
       roseType,
-      center: ['50%', offsetY],
+      center,
       radius,
       datasetIndex,
       ...others
@@ -132,18 +150,27 @@ function handleData(data, settings, isDonut, datasetIndex = 0) {
   return series
 }
 
-function getGraphic(settings) {
-  let { selectedValue } = settings
+function getGraphic(args) {
+  let { settings, extra } = args
+  let { dataType = 'normal', digit = 0, selectedValue } = settings
+  if (typeof selectedValue === 'undefined') return
+  let text = formatMeasure(dataType, selectedValue, digit)
+  let left = getCenter(settings, extra)[0]
   return {
-    type: 'text',
-    z: 100,
-    left: 'center',
-    top: 'middle',
-    style: {
-      fill: '#222222',
-      text: selectedValue,
-      font: '20px Microsoft YaHei'
-    }
+    elements: [
+      {
+        type: 'text',
+        z: 100,
+        left: left,
+        top: 'middle',
+        style: {
+          fill: '#222222',
+          text: text,
+          textAlign: 'center',
+          font: 'bolder 20px Microsoft YaHei'
+        }
+      }
+    ]
   }
 }
 
@@ -156,9 +183,9 @@ export const pie = (data, settings, extra, isDonut) => {
 
   const legend = legendVisible && getPieLegend({ settings })
 
-  const series = getPieSeries({ data, settings, isDonut })
+  const series = getPieSeries({ data, settings, extra, isDonut })
 
-  const graphic = isDonut && getGraphic(settings)
+  const graphic = isDonut && getGraphic({ settings, extra })
 
   // build echarts options
   const options = {

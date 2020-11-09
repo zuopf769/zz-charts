@@ -5,7 +5,27 @@
 :::include(src="./doc/base.vue")
 :::
 
-## 环形图-选中扇区
+## 选中环形扇区
 
 :::include(src="./doc/selected.vue")
+:::
+
+## 设置半径
+
+:::include(src="./doc/radius.vue")
+:::
+
+## 设置 legend 位置
+
+:::include(src="./doc/legend-position.vue")
+:::
+
+## 设置中心点偏移量
+
+:::include(src="./doc/offset-y.vue")
+:::
+
+## tooltipFormater
+
+:::include(src="./doc/tooltip-formatter.vue")
 :::

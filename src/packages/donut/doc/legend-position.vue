@@ -2,6 +2,7 @@
   <uix-donut-chart
     :data="chartData"
     :settings="chartSettings"
+    legend-position="top"
     :height="340"
     :log="true"
     @pieselectchanged="handlePieselectchanged"
