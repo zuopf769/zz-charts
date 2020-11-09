@@ -22,11 +22,15 @@ export default {
       hoverAnimation: false,
       selectedMode: 'single',
       label: {
-        formatter: '{d}%'
+        normal: {
+          formatter: '{d}%'
+        }
       },
       labelLine: {
-        length: 8,
-        length2: 4
+        normal: {
+          length: 8,
+          length2: 4
+        }
       }
     }
   }

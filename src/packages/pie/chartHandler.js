@@ -3,6 +3,18 @@ import { getDataset, formatMeasure } from '@/utils'
 const pieRadius = [0, '70%']
 const donutRadius = ['50%', '70%']
 const pieOffsetY = '50%'
+// 环形图中心显示标签
+const donutLabel = {
+  normal: {
+    show: false,
+    position: 'center'
+  },
+  emphasis: {
+    show: true,
+    fontSize: 20,
+    color: '#222222'
+  }
+}
 
 function getPieDataset(data, settings, extra) {
   const dataset = []
@@ -18,7 +30,7 @@ function getPieDataset(data, settings, extra) {
   return dataset
 }
 
-function getPieTooltip(settings, extra) {
+function getPieTooltip(settings, extra, isDonut) {
   const { dataType = 'normal', digit = 0 } = settings
   let { tooltipFormatter } = extra
 
@@ -32,7 +44,7 @@ function getPieTooltip(settings, extra) {
       let tpl = []
       tpl.push(item.marker)
       tpl.push(`${item.name}:`)
-      tpl.push(formatMeasure(dataType, item.value[1], digit))
+      tpl.push(formatMeasure(dataType, isDonut ? item.value : item.value[1], digit))
       tpl.push(`(${item.percent}%)`)
       return tpl.join(' ')
     }
@@ -70,20 +82,19 @@ function getPieSeries(args) {
 
 function handleData(data, settings, isDonut, datasetIndex = 0) {
   const series = []
-  const { measures } = data
+  const { dimensions, measures } = data
   const {
     selectedMode = false,
     hoverAnimation = true,
     roseType = false,
     offsetY = pieOffsetY,
     radius = isDonut ? donutRadius : pieRadius,
-    label,
+    label = isDonut ? donutLabel : {},
     labelLine,
     itemStyle,
     ...others
   } = settings
-
-  measures.forEach(({ name }) => {
+  measures.forEach(({ name, data = [] }) => {
     let seriesItem = {
       type: 'pie',
       name,
@@ -94,6 +105,18 @@ function handleData(data, settings, isDonut, datasetIndex = 0) {
       radius,
       datasetIndex,
       ...others
+    }
+
+    if (isDonut) {
+      let { selectedValue = 0 } = settings
+      seriesItem.data = data.map((value, index) => {
+        let selected = selectedValue === value
+        return {
+          name: dimensions.data[index],
+          value: value,
+          selected
+        }
+      })
     }
     if (label) {
       seriesItem.label = label
@@ -109,22 +132,40 @@ function handleData(data, settings, isDonut, datasetIndex = 0) {
   return series
 }
 
+function getGraphic(settings) {
+  let { selectedValue } = settings
+  return {
+    type: 'text',
+    z: 100,
+    left: 'center',
+    top: 'middle',
+    style: {
+      fill: '#222222',
+      text: selectedValue,
+      font: '20px Microsoft YaHei'
+    }
+  }
+}
+
 export const pie = (data, settings, extra, isDonut) => {
   const { tooltipVisible, legendVisible } = extra
 
   const dataset = getPieDataset(data, settings, extra)
 
-  const tooltip = tooltipVisible && getPieTooltip(settings, extra)
+  const tooltip = tooltipVisible && getPieTooltip(settings, extra, isDonut)
 
   const legend = legendVisible && getPieLegend({ settings })
 
   const series = getPieSeries({ data, settings, isDonut })
+
+  const graphic = isDonut && getGraphic(settings)
 
   // build echarts options
   const options = {
     dataset,
     tooltip,
     legend,
+    graphic,
     series
   }
 

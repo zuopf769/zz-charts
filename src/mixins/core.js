@@ -1,9 +1,10 @@
 import { cloneDeep, isNull, isEmpty, isUndefined, get } from 'lodash-es'
-
 import { getType } from '@/utils'
 import setExtend from '@/utils/extend'
 import { DEFAULT_THEME, DEFAULT_COLORS } from '@/constants'
 
+// expose echartsLib to user
+import echartsLib from 'echarts/lib/echarts'
 // default echarts's component in VeCharts
 import 'echarts/lib/component/title'
 import 'echarts/lib/component/tooltip'
@@ -11,6 +12,7 @@ import 'echarts/lib/component/grid'
 import 'echarts/lib/component/legend'
 import 'echarts/lib/component/legendScroll'
 import 'echarts/lib/component/dataset'
+import 'echarts/lib/component/graphic'
 
 export default {
   props: {
@@ -27,6 +29,10 @@ export default {
         return {}
       }
     },
+    beforeConfig: { type: Function },
+    afterConfig: { type: Function },
+    afterSetOption: { type: Function },
+    afterSetOptionOnce: { type: Function },
     // echarts default options
     title: Object,
     legend: Object,
@@ -48,7 +54,7 @@ export default {
     parallelAxis: Array,
     singleAxis: Array,
     timeline: Object,
-    graphic: Object,
+    graphic: [Object, Array],
     calendar: Object,
     dataset: Object,
     series: [Object, Array],
@@ -82,8 +88,6 @@ export default {
   },
   data() {
     return {
-      // echarts instance
-      ec: null,
       initOptions: null
     }
   },
@@ -134,9 +138,6 @@ export default {
       handler() {
         this.dataHandler(this.data)
       }
-    },
-    ec(val) {
-      this.$emit('update:ec', val)
     }
   },
   methods: {
@@ -150,7 +151,10 @@ export default {
         isEmptySeries: this.isEmptySeries,
         _once: this._once
       }
-      if (this.beforeConfig) data = this.beforeConfig(data)
+      // 对数据提前进行额外的处理，在数据转化为配置项开始前触发
+      if (this.beforeConfig) {
+        data = this.beforeConfig(data)
+      }
 
       const options = this.chartHandler(data, cloneDeep(this.settings), extra)
 
@@ -223,13 +227,45 @@ export default {
         })
       }
       // Merge options
-      this.options = Object.assign(cloneDeep(this.options), options)
+      let finalOptions = Object.assign(cloneDeep(this.options), options)
       // change inited echarts settings
-      if (this.extend) setExtend(this.options, this.extend)
-      if (this.log) console.log(this.options)
+      if (this.extend) {
+        setExtend(finalOptions, this.extend)
+      }
+      // 对生成好的echarts配置进行额外的处理，在数据转化为配置项结束后触发
+      if (this.afterConfig) {
+        finalOptions = this.afterConfig(finalOptions)
+      }
+      this.options = finalOptions
+
+      this.$nextTick(() => {
+        let echartsInstance = this.$refs.baseEcharts.chart
+        if (this.afterSetOption) {
+          this.afterSetOption(echartsInstance, this.options, echartsLib)
+        }
+        if (this.afterSetOptionOnce && !this._once['afterSetOptionOnce']) {
+          this._once['afterSetOptionOnce'] = true
+          this.afterSetOptionOnce(echartsInstance, this.options, echartsLib)
+        }
+
+        // 渲染完成事件，当渲染动画或者渐进渲染停止时触发
+        echartsInstance.on('finished', () => {
+          this.$emit('ready', this.echarts, options, echartsLib)
+          if (!this._once['ready-once']) {
+            this._once['ready-once'] = true
+            this.$emit('ready-once', this.echarts, options, echartsLib)
+          }
+        })
+      })
+
+      if (this.log) {
+        console.log(this.options)
+      }
     },
     init() {
-      if (this.data) this.dataHandler(this.data)
+      if (this.data) {
+        this.dataHandler(this.data)
+      }
     },
     addWatchToProps() {
       const watchedVariable = this._watchers.map(watcher => watcher.expression)

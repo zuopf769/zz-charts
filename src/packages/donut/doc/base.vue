@@ -1,5 +1,5 @@
 <template>
-  <uix-donut-chart :data="chartData" :height="340" />
+  <uix-donut-chart :data="chartData" :settings="chartSettings" :height="340" />
 </template>
 
 <script>
@@ -16,6 +16,10 @@ export default {
           data: [40000, 27800, 22000, 20200, 15600, 13600]
         }
       ]
+    }
+
+    this.chartSettings = {
+      selectedMode: 'single'
     }
   }
 }

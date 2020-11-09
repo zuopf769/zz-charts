@@ -2,12 +2,12 @@
   <div class="uix-charts-parent" :style="parentStyle">
     <base-echarts
       v-if="isHasData"
+      ref="baseEcharts"
       :init-options="initOptions"
       :options="options"
       :autoresize="true"
       :theme="chartTheme"
       :chart-height="height"
-      :ec.sync="ec"
       v-on="$listeners"
     />
     <slot v-if="!isHasData && !loading">

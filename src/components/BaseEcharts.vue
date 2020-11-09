@@ -151,7 +151,6 @@ export default {
       if (this.group) {
         chart.group = this.group
       }
-
       chart.setOption(options || this.manualOptions || this.options || {}, true)
 
       Object.keys(this.$listeners).forEach(event => {
@@ -215,7 +214,6 @@ export default {
           }
         }
       })
-
       this.chart = chart
     },
     initOptionsWatcher() {
