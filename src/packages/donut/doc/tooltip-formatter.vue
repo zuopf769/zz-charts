@@ -5,7 +5,6 @@
     :height="340"
     :tooltip-formatter="tooltipFormatter"
     :log="true"
-    :after-set-option="afterSetOption"
     @pieselectchanged="handlePieselectchanged"
   />
 </template>
@@ -17,7 +16,7 @@ export default {
       chartSettings: {
         hoverAnimation: false,
         selectedMode: 'single',
-        selectedValue: 4011000,
+        selectedDimension: '米面粮油',
         label: {
           show: false
         }
@@ -54,26 +53,20 @@ export default {
       ]
     }
 
-    this.dataMap = {
-      米面粮油: 40000,
-      '肉禽水产（鲜）': 27800,
-      '肉禽水产（冷冻）': 22000,
-      '冷冻饮品、饮料、酒': 20200,
-      调料干货: 15600,
-      鲜蛋及蛋制品: 13600
-    }
+    this.showValArr = ['4276', '41.23%', '15.42%']
   },
   methods: {
     handlePieselectchanged(selected) {
-      this.chartSettings.selectedValue = this.dataMap[selected.name]
+      this.chartSettings.selectedDimension = selected.name
     },
-    tooltipFormatter(items) {
-      console.log(items)
-      return '22222'
-    },
-    afterSetOption(echarts) {
-      console.log(echarts)
-      console.log('xxx', echarts.getViewOfComponentModel())
+    tooltipFormatter(item) {
+      let tpl = []
+      let { marker, name } = item
+      tpl.push(`${marker}${name}<br>`)
+      tpl.push(`销售额：${this.showValArr[0]}<br>`)
+      tpl.push(`客户覆盖：${this.showValArr[1]}<br>`)
+      tpl.push(`综合毛利率（考核）：${this.showValArr[1]}<br>`)
+      return tpl.join('')
     }
   }
 }

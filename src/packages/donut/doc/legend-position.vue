@@ -16,7 +16,7 @@ export default {
       chartSettings: {
         hoverAnimation: false,
         selectedMode: 'single',
-        selectedValue: 40000,
+        selectedDimension: 'APP',
         label: {
           show: false
         }
@@ -36,19 +36,10 @@ export default {
         }
       ]
     }
-
-    this.dataMap = {
-      APP: '40000',
-      PC: '27800',
-      M端: '22000',
-      微信: '20200',
-      手Q: '15600',
-      小程序: '13600'
-    }
   },
   methods: {
     handlePieselectchanged(selected) {
-      this.chartSettings.selectedValue = this.dataMap[selected.name]
+      this.chartSettings.selectedDimension = selected.name
     }
   }
 }

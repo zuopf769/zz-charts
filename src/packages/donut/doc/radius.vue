@@ -15,7 +15,7 @@ export default {
       chartSettings: {
         hoverAnimation: false,
         selectedMode: 'single',
-        selectedValue: 40000,
+        selectedDimension: 'APP',
         radius: ['30%', '50%'],
         label: {
           show: false
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     handlePieselectchanged(selected) {
-      this.chartSettings.selectedValue = this.dataMap[selected.name]
+      this.chartSettings.selectedDimension = selected.name
     }
   }
 }

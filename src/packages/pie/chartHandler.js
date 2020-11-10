@@ -20,7 +20,6 @@ const donutLabel = {
 
 function getDefaultCenter(extra) {
   let { legendPosition } = extra
-  console.log('22222', legendPosition)
   let defaultCenter = pieCenter
   if (~['top', 'bottom'].indexOf(legendPosition)) {
     defaultCenter = pieCenter2
@@ -28,13 +27,8 @@ function getDefaultCenter(extra) {
   return defaultCenter
 }
 
-function getCenter(settings, extra) {
-  let { center } = settings
-  if (center) return center
-  return getDefaultCenter(extra)
-}
-
-function getPieDataset(data, settings, extra) {
+function getPieDataset(args) {
+  let { data, settings, extra } = args
   const dataset = []
   extra.chartType = 'pie'
   // 环形饼图
@@ -48,7 +42,8 @@ function getPieDataset(data, settings, extra) {
   return dataset
 }
 
-function getPieTooltip(settings, extra, isDonut) {
+function getPieTooltip(args) {
+  let { settings, extra, isDonut } = args
   const { dataType = 'normal', digit = 0 } = settings
   let { tooltipFormatter } = extra
 
@@ -70,11 +65,56 @@ function getPieTooltip(settings, extra, isDonut) {
 }
 
 function getPieLegend(args) {
-  const { settings } = args
+  const { data, settings, isDonut } = args
   const { legendType = 'scroll', legendPadding = 5 } = settings
-  return {
+  let legend = {
     type: legendType,
     padding: legendPadding
+  }
+
+  if (isDonut) {
+    const { dimensions } = data
+    legend.data = dimensions.data
+  }
+  return legend
+}
+
+// 环形图中央的label是一个label显示在中央的pie
+function getCenterLabelSeriesItem(args) {
+  let { settings, extra } = args
+  const { dataType = 'normal', digit = 0, selectedDimension } = settings
+  let { selectedValue, selectedValueFormatter } = extra
+  let center = getDefaultCenter(extra)
+
+  return {
+    name: 'label',
+    type: 'pie',
+    radius: [0, center[0]],
+    center,
+    label: {
+      normal: {
+        position: 'center',
+        fontSize: 20,
+        fontWeight: 'bolder',
+        color: '#222222',
+        formatter() {
+          if (selectedValueFormatter) {
+            return selectedValueFormatter.apply(null, [{ selectedDimension, selectedValue }])
+          }
+          return formatMeasure(dataType, selectedValue, digit)
+        }
+      }
+    },
+    itemStyle: {
+      opacity: 0
+    },
+    labelLine: {
+      normal: {
+        show: false
+      }
+    },
+    silent: true,
+    data: [{ value: 25, name: selectedValue }]
   }
 }
 
@@ -103,6 +143,7 @@ function handleData(data, settings, extra, isDonut, datasetIndex = 0) {
   const { dimensions, measures } = data
   const {
     selectedMode = false,
+    selectedDimension,
     hoverAnimation = true,
     roseType = false,
     center = getDefaultCenter(extra),
@@ -112,6 +153,7 @@ function handleData(data, settings, extra, isDonut, datasetIndex = 0) {
     itemStyle,
     ...others
   } = settings
+
   measures.forEach(({ name, data = [] }) => {
     let seriesItem = {
       type: 'pie',
@@ -125,10 +167,11 @@ function handleData(data, settings, extra, isDonut, datasetIndex = 0) {
       ...others
     }
 
-    if (isDonut) {
-      let { selectedValue = 0 } = settings
+    if (isDonut && selectedMode && selectedDimension) {
       seriesItem.data = data.map((value, index) => {
-        let selected = selectedValue === value
+        let dimension = dimensions.data[index]
+        let selected = dimension === selectedDimension
+        if (selected) extra.selectedValue = value
         return {
           name: dimensions.data[index],
           value: value,
@@ -147,52 +190,29 @@ function handleData(data, settings, extra, isDonut, datasetIndex = 0) {
     }
     series.push(seriesItem)
   })
-  return series
-}
 
-function getGraphic(args) {
-  let { settings, extra } = args
-  let { dataType = 'normal', digit = 0, selectedValue } = settings
-  if (typeof selectedValue === 'undefined') return
-  let text = formatMeasure(dataType, selectedValue, digit)
-  let left = getCenter(settings, extra)[0]
-  return {
-    elements: [
-      {
-        type: 'text',
-        z: 100,
-        left: left,
-        top: 'middle',
-        style: {
-          fill: '#222222',
-          text: text,
-          textAlign: 'center',
-          font: 'bolder 20px Microsoft YaHei'
-        }
-      }
-    ]
+  if (isDonut && selectedMode && selectedDimension) {
+    series.push(getCenterLabelSeriesItem({ settings, extra }))
   }
+  return series
 }
 
 export const pie = (data, settings, extra, isDonut) => {
   const { tooltipVisible, legendVisible } = extra
 
-  const dataset = getPieDataset(data, settings, extra)
+  const dataset = getPieDataset({ data, settings, extra })
 
-  const tooltip = tooltipVisible && getPieTooltip(settings, extra, isDonut)
+  const tooltip = tooltipVisible && getPieTooltip({ settings, extra, isDonut })
 
-  const legend = legendVisible && getPieLegend({ settings })
+  const legend = legendVisible && getPieLegend({ data, settings, isDonut })
 
   const series = getPieSeries({ data, settings, extra, isDonut })
-
-  const graphic = isDonut && getGraphic({ settings, extra })
 
   // build echarts options
   const options = {
     dataset,
     tooltip,
     legend,
-    graphic,
     series
   }
 

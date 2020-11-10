@@ -11,7 +11,6 @@ import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/grid'
 import 'echarts/lib/component/legendScroll'
 import 'echarts/lib/component/dataset'
-import 'echarts/lib/component/graphic'
 
 export default {
   props: {
@@ -74,6 +73,7 @@ export default {
     // uix-charts custom props
     tooltipVisible: { type: Boolean, default: true },
     tooltipFormatter: { type: Function },
+    selectedValueFormatter: { type: Function },
     legendVisible: { type: Boolean, default: true },
     legendPosition: { type: String, default: 'bottom' },
     theme: Object,
@@ -145,6 +145,7 @@ export default {
       const extra = {
         tooltipVisible: this.tooltipVisible,
         tooltipFormatter: this.tooltipFormatter,
+        selectedValueFormatter: this.selectedValueFormatter,
         legendVisible: this.legendVisible,
         legendPosition: this.legendPosition,
         isEmptyData: this.isEmptyData,

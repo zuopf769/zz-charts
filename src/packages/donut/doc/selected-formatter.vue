@@ -2,6 +2,7 @@
   <uix-donut-chart
     :data="chartData"
     :settings="chartSettings"
+    :selected-value-formatter="selectedValueFormatter"
     :height="340"
     :log="true"
     @pieselectchanged="handlePieselectchanged"
@@ -15,9 +16,7 @@ export default {
       chartSettings: {
         hoverAnimation: false,
         selectedMode: 'single',
-        selectedValue: 40000,
-        radius: ['30%', '50%'],
-        offsetY: 100,
+        selectedDimension: 'APP',
         label: {
           show: false
         }
@@ -39,17 +38,21 @@ export default {
     }
 
     this.dataMap = {
-      APP: '40000',
-      PC: '27800',
-      M端: '22000',
-      微信: '20200',
-      手Q: '15600',
-      小程序: '13600'
+      APP: '4,0000',
+      PC: '27,800',
+      M端: '22,000',
+      微信: '20,200',
+      手Q: '15,600',
+      小程序: '13,600'
     }
   },
   methods: {
     handlePieselectchanged(selected) {
-      this.chartSettings.selectedValue = this.dataMap[selected.name]
+      this.chartSettings.selectedDimension = selected.name
+    },
+    selectedValueFormatter(selected) {
+      let { selectedDimension, selectedValue } = selected
+      return [selectedDimension, selectedValue].join('\n')
     }
   }
 }

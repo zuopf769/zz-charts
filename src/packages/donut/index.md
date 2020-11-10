@@ -10,6 +10,11 @@
 :::include(src="./doc/selected.vue")
 :::
 
+## 环形选中值 formatter
+
+:::include(src="./doc/selected-formatter.vue")
+:::
+
 ## 设置半径
 
 :::include(src="./doc/radius.vue")
@@ -18,11 +23,6 @@
 ## 设置 legend 位置
 
 :::include(src="./doc/legend-position.vue")
-:::
-
-## 设置中心点偏移量
-
-:::include(src="./doc/offset-y.vue")
 :::
 
 ## tooltipFormater
