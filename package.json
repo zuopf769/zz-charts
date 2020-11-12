@@ -4,7 +4,7 @@
   "description": "Vue2.x Charts Components Based ECharts4.x",
   "main": "lib/uix-charts.common.js",
   "typings": "types/index.d.ts",
-  "author": "zuopengei02<zuopengfei02@meituan.com>",
+  "author": "",
   "scripts": {
     "bootstrap": "npm i",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build-script/webpack.demo.conf.js",
@@ -22,7 +22,7 @@
   "homepage": "",
   "repository": {
     "type": "git",
-    "url": "ssh://git@git.sankuai.com/~zuopengfei02/xgfe-vue-charts.git"
+    "url": "ssh://git@git.sankuai.com/b2bwm/xgfe-vue-charts.git"
   },
   "keywords": [
     "Vue",
