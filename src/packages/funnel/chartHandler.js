@@ -21,7 +21,6 @@ function getFunnelSeries(args) {
   const { dimensions, measures } = data
   const dimName = dimensions && `${dimensions.name}`
   const {
-    ascending = false,
     funnelAlign = 'center',
     contrast = false,
     symmetric = false,
@@ -146,7 +145,6 @@ function getFunnelSeries(args) {
     series.push({
       type: 'funnel',
       name,
-      sort: ascending ? 'ascending' : 'descending',
       funnelAlign: getAlign(symmetric, idx),
       width: symmetric ? '40%' : '80%',
       x: getX(symmetric, idx),

@@ -18,7 +18,7 @@ export default {
       ]
     }
     this.chartSettings = {
-      ascending: true
+      sort: 'ascending'
     }
   }
 }
