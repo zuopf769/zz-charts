@@ -30,3 +30,9 @@
 :::include(src="./doc/symmetric.vue")
 :::
 
+
+## 排序漏斗图
+
+:::include(src="./doc/sort.vue")
+:::
+
