@@ -14,3 +14,9 @@
 
 :::include(src="./doc/squareTip.vue")
 :::
+
+## 不同对齐方式的漏斗图
+
+:::include(src="./doc/funnelAlign.vue")
+:::
+
