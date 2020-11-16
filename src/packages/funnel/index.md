@@ -25,3 +25,8 @@
 :::include(src="./doc/contrast.vue")
 :::
 
+## 对称漏斗图
+
+:::include(src="./doc/symmetric.vue")
+:::
+
