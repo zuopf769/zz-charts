@@ -9,3 +9,8 @@
 
 :::include(src="./doc/ascending.vue")
 :::
+
+## 方头漏斗图
+
+:::include(src="./doc/squareTip.vue")
+:::

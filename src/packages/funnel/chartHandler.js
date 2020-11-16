@@ -26,6 +26,7 @@ function getFunnelSeries(args) {
     contrast = false,
     symmetric = false,
     labelPosition = 'outside',
+    squareTip = false,
     funnelLabel,
     ...others
   } = settings
@@ -46,6 +47,22 @@ function getFunnelSeries(args) {
       maxSize = `${quotient * 100}%`
     }
     return maxSize
+  }
+
+  const getMin = (measures, idx) => {
+    return squareTip ? Math.min(...measures[idx].data) : 0
+  }
+
+  const getMax = (measures, idx) => {
+    return Math.max(...measures[idx].data)
+  }
+
+  const getMinSize = (measures, idx) => {
+    let minSize = '0%'
+    if (squareTip) {
+      minSize = `${Math.round((100 * getMin(measures, idx)) / getMax(measures, idx))}%`
+    }
+    return minSize
   }
 
   const getX = (symmetric, idx) => {
@@ -133,6 +150,8 @@ function getFunnelSeries(args) {
       funnelAlign: getAlign(symmetric, idx),
       width: symmetric ? '40%' : '80%',
       x: getX(symmetric, idx),
+      min: getMin(measures, idx),
+      minSize: getMinSize(measures, idx),
       maxSize: !contrast || idx === 0 ? '100%' : getMaxSize(measures),
       label: getLabel({ contrast, symmetric, funnelLabel }, idx),
       encode: getEncode(dimName, name),
