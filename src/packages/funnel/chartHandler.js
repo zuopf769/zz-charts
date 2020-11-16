@@ -39,11 +39,11 @@ function getFunnelSeries(args) {
     if (measures.length > 1) {
       const quotient = measures.reduce((prev, next) => {
         return Math.round(
-          Math.min([Math.max(prev.data), Math.max(next.data)]) / Math.max([Math.max(prev.data), Math.max(next.data)]),
-          2
+          (Math.min(Math.max(...prev.data), Math.max(...next.data)) * 100) /
+            Math.max(Math.max(...prev.data), Math.max(...next.data))
         )
       })
-      maxSize = `${quotient * 100}%`
+      maxSize = `${quotient}%`
     }
     return maxSize
   }
@@ -94,7 +94,7 @@ function getFunnelSeries(args) {
           position: 'inside',
           formatter: params => {
             const maxValue = measures.reduce((prev, next) => {
-              return Math.max([Math.max(prev.data), Math.max(next.data)])
+              return Math.max(Math.max(...prev.data), Math.max(...next.data))
             })
             const [, , mea2] = params.value
             return `${Math.round((mea2 / maxValue) * 100, 2)}%`
@@ -104,7 +104,7 @@ function getFunnelSeries(args) {
           position: 'inside',
           formatter: params => {
             const maxValue = measures.reduce((prev, next) => {
-              return Math.max([Math.max(prev.data), Math.max(next.data)])
+              return Math.max(Math.max(...prev.data), Math.max(...next.data))
             })
             const [dimName, , mea2] = params.value
             return `${dimName} ${Math.round((mea2 / maxValue) * 100, 2)}%`

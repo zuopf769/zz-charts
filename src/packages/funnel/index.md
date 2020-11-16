@@ -20,3 +20,8 @@
 :::include(src="./doc/funnelAlign.vue")
 :::
 
+## 对比漏斗图
+
+:::include(src="./doc/contrast.vue")
+:::
+
