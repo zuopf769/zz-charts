@@ -36,3 +36,7 @@
 :::include(src="./doc/sort.vue")
 :::
 
+## 自定义样式漏斗图
+
+:::include(src="./doc/style.vue")
+:::
