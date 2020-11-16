@@ -36,6 +36,10 @@
       {
         "path": "/pc-demo/donut",
         "cnName": "环形图"
+      },
+      {
+        "path": "/pc-demo/funnel",
+        "cnName": "漏斗图"
       }
     ]
   }
