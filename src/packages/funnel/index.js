@@ -5,9 +5,7 @@ import { funnel } from './chartHandler'
 
 export default {
   name: 'UixFunnelChart',
-  props: {
-    legendPosition: { type: String, default: 'top' }
-  },
+  props: {},
   mixins: [HocEcharts],
   created() {
     this.chartHandler = funnel

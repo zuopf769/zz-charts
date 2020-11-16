@@ -4,3 +4,8 @@
 
 :::include(src="./doc/base.vue")
 :::
+
+## 金字塔图
+
+:::include(src="./doc/ascending.vue")
+:::

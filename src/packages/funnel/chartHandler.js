@@ -9,7 +9,7 @@ function getFunnelTooltip() {
 
 function getFunnelLegend(args) {
   const { settings } = args
-  const { legendType = 'plain', legendPadding = 5 } = settings
+  const { legendType = 'scroll', legendPadding = 5 } = settings
   return {
     type: legendType,
     padding: legendPadding
@@ -21,7 +21,7 @@ function getFunnelSeries(args) {
   const { dimensions, measures } = data
   const dimName = dimensions && `${dimensions.name}`
   const {
-    funnelSort = 'desc',
+    ascending = false,
     funnelAlign = 'center',
     contrast = false,
     symmetric = false,
@@ -129,7 +129,7 @@ function getFunnelSeries(args) {
     series.push({
       type: 'funnel',
       name,
-      sort: funnelSort === 'desc' ? 'descending' : 'ascending',
+      sort: ascending ? 'ascending' : 'descending',
       funnelAlign: getAlign(symmetric, idx),
       width: symmetric ? '40%' : '80%',
       x: getX(symmetric, idx),
