@@ -20,6 +20,11 @@
 :::include(src="./doc/funnelAlign.vue")
 :::
 
+## 不同标签位置的漏斗图
+
+:::include(src="./doc/funnelLabel.vue")
+:::
+
 ## 对比漏斗图
 
 :::include(src="./doc/contrast.vue")
@@ -52,6 +57,7 @@
 | squareTip     | boolean                                                      | 漏斗底部是否为矩形，默认为三角形                             | 否         | false        |
 | sort          | ‘ascending’\|‘descending’\|'none'\|Function                  | 数据显示顺序，可参考[文档](https://echarts.apache.org/zh/option.html#series-funnel.sort) | 否         | 'descending' |
 | funnelAlign   | 'left' \| 'right'\| 'center'                                 | 图形对齐方式                                                 | 否         | center       |
+| funnelLabel   | object\| Array                                               | 统一/分别设置标签位置及样式，内容参考[文档](https://echarts.apache.org/zh/option.html#series-funnel.label) | 否         |              |
 | contrast      | boolean                                                      | 对比图例                                                     | 否         | false        |
 | symmetric     | boolean                                                      | 对称图例                                                     | 否         | false        |
 | label         | object                                                       | 设置文本标签样式，内容参考[文档](https://echarts.apache.org/zh/option.html#series-funnel.label) | 否         |              |
