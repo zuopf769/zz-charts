@@ -2,6 +2,7 @@ import Vue from 'vue'
 import { zip, sum, round, cloneDeep, isNaN, isUndefined } from 'lodash-es'
 import numeral from 'numeral'
 import './formatZhNumber'
+export * from './color'
 
 const getStackMap = stack => {
   const stackMap = {}

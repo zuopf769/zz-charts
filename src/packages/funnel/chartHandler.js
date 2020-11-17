@@ -1,5 +1,20 @@
-import Vue from 'vue'
-import { getDataset } from '@/utils'
+import { getDataset, getColors } from '@/utils'
+import { COLOR_FAMEYLIES_NAMES } from '@/constants'
+
+function getFunnelColor({ data, settings }) {
+  let { color, colorTheme = 'main' } = settings
+  if (color && Array.isArray(color) && color.length != 0) {
+    return color
+  }
+  if (!COLOR_FAMEYLIES_NAMES.includes(colorTheme) && colorTheme !== 'main') {
+    console.log(colorTheme in COLOR_FAMEYLIES_NAMES)
+    colorTheme = 'main'
+  }
+  return getColors(
+    data.measures.map(a => a.data.length).reduce((a, b) => a + b),
+    colorTheme
+  )
+}
 
 function getFunnelTooltip() {
   return {
@@ -32,7 +47,7 @@ function getFunnelSeries(args) {
 
   const getMaxSize = measures => {
     if (measures.length > 2) {
-      Vue.util.warn(`data.measures.length is more then 2 in [Contrastive funnel chart]. Please use 2 measures`, this)
+      console.warn(`data.measures.length is more then 2 in [Contrastive funnel chart]. Please use 2 measures`, this)
       return
     }
     let maxSize = ''
@@ -160,11 +175,12 @@ function getFunnelSeries(args) {
 }
 
 export const funnel = (data, settings, extra) => {
-  console.log('extra', extra)
   const { tooltipVisible, legendVisible } = extra
 
   extra.chartType = 'funnel'
   const dataset = getDataset(data, settings, extra)
+
+  const color = getFunnelColor({ data, settings, extra })
 
   const tooltip = tooltipVisible && getFunnelTooltip()
 
@@ -174,6 +190,7 @@ export const funnel = (data, settings, extra) => {
 
   // build echarts options
   const options = {
+    color,
     dataset,
     tooltip,
     legend,
