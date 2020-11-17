@@ -16,10 +16,15 @@ function getFunnelColor({ data, settings }) {
   )
 }
 
-function getFunnelTooltip() {
-  return {
+function getFunnelTooltip({ extra }) {
+  let { tooltipFormatter } = extra
+  let tooltip = {
     trigger: 'item'
   }
+  if (tooltipFormatter) {
+    tooltip.formatter = tooltipFormatter
+  }
+  return tooltip
 }
 
 function getFunnelLegend(args) {
@@ -182,7 +187,7 @@ export const funnel = (data, settings, extra) => {
 
   const color = getFunnelColor({ data, settings, extra })
 
-  const tooltip = tooltipVisible && getFunnelTooltip()
+  const tooltip = tooltipVisible && getFunnelTooltip({ extra })
 
   const legend = legendVisible && getFunnelLegend({ settings })
 

@@ -42,6 +42,19 @@ export const DEFAULT_THEME = {
         color: labelLineColor
       }
     }
+  },
+  funnel: {
+    label: {
+      color: labelColor,
+      fontSize: 13
+    },
+    labelLine: {
+      length: 10,
+      length2: 5,
+      lineStyle: {
+        color: labelLineColor
+      }
+    }
   }
 }
 
