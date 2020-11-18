@@ -168,8 +168,8 @@ export default {
       }
     },
     optionsHandler(options) {
-      // color
-      options.color = this.chartColor
+      // color, 优先以组件如funnel给出的颜色为主
+      options.color = options.color || this.chartColor
 
       // handle legend
       if (this.legendPosition && options.legend) {
