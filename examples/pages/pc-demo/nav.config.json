@@ -40,6 +40,10 @@
       {
         "path": "/pc-demo/funnel",
         "cnName": "漏斗图"
+      },
+      {
+        "path": "/pc-demo/scatter",
+        "cnName": "散点图"
       }
     ]
   }
