@@ -1,7 +1,7 @@
 export const options = {
   grid: {
-    right: 10,
-    left: 10,
+    right: '5%',
+    left: '5%',
     containLabel: true
   },
   series: []
@@ -15,8 +15,8 @@ export const labelLineColor = '#cccccc'
 
 export const DEFAULT_THEME = {
   grid: {
-    right: 10,
-    left: 10,
+    right: '5%',
+    left: '5%',
     containLabel: true
   },
   legend: {

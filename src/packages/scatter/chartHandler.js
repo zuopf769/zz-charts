@@ -59,7 +59,9 @@ function getScatterSeries(args) {
         { xAxis: settings.markLine && settings.markLine[0] },
         { yAxis: settings.markLine && settings.markLine[1] }
       ],
-      symbol: ['circle', 'none']
+      silent: true,
+      symbol: 'none',
+      animation: false
     }
   }
 
@@ -108,9 +110,23 @@ function getScatterXAxis(args) {
     nameTextStyle: {
       padding: [8, 0, 0, 0]
     },
+    axisLine: {
+      lineStyle: {
+        color: '#EEEEEE'
+      }
+    },
+    axisLabel: {
+      margin: 10,
+      fontWeight: 400,
+      color: '#666666'
+    },
+    axisTick: {
+      show: false
+    },
     splitLine: {
       lineStyle: {
-        type: 'dashed'
+        type: 'dashed',
+        color: '#EEEEEE'
       }
     }
   }
@@ -125,9 +141,23 @@ function getScatterYAxis(args) {
     max: yAxisMax,
     scale: yAxisScale,
     name: settings.dimensions && settings.dimensions[1],
+    axisLine: {
+      lineStyle: {
+        color: '#EEEEEE'
+      }
+    },
+    axisLabel: {
+      margin: 10,
+      fontWeight: 400,
+      color: '#666666'
+    },
+    axisTick: {
+      show: false
+    },
     splitLine: {
       lineStyle: {
-        type: 'dashed'
+        type: 'dashed',
+        color: '#EEEEEE'
       }
     }
   }

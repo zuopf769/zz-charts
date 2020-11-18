@@ -45,7 +45,10 @@ export default {
           opacity: 0.8
         }
       },
-      markLine: [6000, 60]
+      symbolSize: function (data) {
+        return Math.sqrt(data[2]) / 5e2
+      },
+      markLine: [25000, 40]
     }
   }
 }

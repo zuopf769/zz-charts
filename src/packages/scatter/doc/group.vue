@@ -1,5 +1,5 @@
 <template>
-  <uix-scatter-chart :data="chartData" :settings="chartSettings" :tooltip="tooltip" />
+  <uix-scatter-chart :data="chartData" :settings="chartSettings" :height="340" :tooltip="tooltip" />
 </template>
 
 <script>

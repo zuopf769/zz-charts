@@ -14,3 +14,8 @@
 
 :::include(src="./doc/mark-line.vue")
 :::
+
+## 气泡图
+
+:::include(src="./doc/symbol-size.vue")
+:::

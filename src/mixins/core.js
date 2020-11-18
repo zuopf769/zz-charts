@@ -11,6 +11,7 @@ import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/grid'
 import 'echarts/lib/component/legendScroll'
 import 'echarts/lib/component/dataset'
+import 'echarts/lib/component/markLine'
 
 export default {
   props: {
