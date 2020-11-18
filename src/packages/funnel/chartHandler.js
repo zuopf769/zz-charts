@@ -3,11 +3,10 @@ import { COLOR_FAMEYLIES_NAMES } from '@/constants'
 
 function getFunnelColor({ data, settings }) {
   let { color, colorTheme = 'main' } = settings
-  if (color && Array.isArray(color) && color.length != 0) {
+  if (color) {
     return color
   }
-  if (!COLOR_FAMEYLIES_NAMES.includes(colorTheme) && colorTheme !== 'main') {
-    console.log(colorTheme in COLOR_FAMEYLIES_NAMES)
+  if (COLOR_FAMEYLIES_NAMES.indexOf(colorTheme) === -1 && colorTheme !== 'main') {
     colorTheme = 'main'
   }
   return getColors(
@@ -185,13 +184,15 @@ export const funnel = (data, settings, extra) => {
   extra.chartType = 'funnel'
   const dataset = getDataset(data, settings, extra)
 
-  const color = getFunnelColor({ data, settings, extra })
+  const { color: scolor, colorTheme, ...otherSettings } = settings
+
+  const color = getFunnelColor({ data, settings: { color: scolor, colorTheme }, extra })
 
   const tooltip = tooltipVisible && getFunnelTooltip({ extra })
 
   const legend = legendVisible && getFunnelLegend({ settings })
 
-  const series = getFunnelSeries({ data, settings })
+  const series = getFunnelSeries({ data, settings: otherSettings })
 
   // build echarts options
   const options = {
