@@ -1,10 +1,29 @@
-import Vue from 'vue'
-import { getDataset } from '@/utils'
+import { getDataset, getColors } from '@/utils'
+import { COLOR_FAMEYLIES_NAMES } from '@/constants'
 
-function getFunnelTooltip() {
-  return {
+function getFunnelColor({ data, settings }) {
+  let { color, colorTheme = 'main' } = settings
+  if (color) {
+    return color
+  }
+  if (COLOR_FAMEYLIES_NAMES.indexOf(colorTheme) === -1 && colorTheme !== 'main') {
+    colorTheme = 'main'
+  }
+  return getColors(
+    data.measures.map(a => a.data.length).reduce((a, b) => a + b),
+    colorTheme
+  )
+}
+
+function getFunnelTooltip({ extra }) {
+  let { tooltipFormatter } = extra
+  let tooltip = {
     trigger: 'item'
   }
+  if (tooltipFormatter) {
+    tooltip.formatter = tooltipFormatter
+  }
+  return tooltip
 }
 
 function getFunnelLegend(args) {
@@ -32,7 +51,7 @@ function getFunnelSeries(args) {
 
   const getMaxSize = measures => {
     if (measures.length > 2) {
-      Vue.util.warn(`data.measures.length is more then 2 in [Contrastive funnel chart]. Please use 2 measures`, this)
+      console.warn(`data.measures.length is more then 2 in [Contrastive funnel chart]. Please use 2 measures`, this)
       return
     }
     let maxSize = ''
@@ -160,20 +179,24 @@ function getFunnelSeries(args) {
 }
 
 export const funnel = (data, settings, extra) => {
-  console.log('extra', extra)
   const { tooltipVisible, legendVisible } = extra
 
   extra.chartType = 'funnel'
   const dataset = getDataset(data, settings, extra)
 
-  const tooltip = tooltipVisible && getFunnelTooltip()
+  const { color: scolor, colorTheme, ...otherSettings } = settings
+
+  const color = getFunnelColor({ data, settings: { color: scolor, colorTheme }, extra })
+
+  const tooltip = tooltipVisible && getFunnelTooltip({ extra })
 
   const legend = legendVisible && getFunnelLegend({ settings })
 
-  const series = getFunnelSeries({ data, settings })
+  const series = getFunnelSeries({ data, settings: otherSettings })
 
   // build echarts options
   const options = {
+    color,
     dataset,
     tooltip,
     legend,

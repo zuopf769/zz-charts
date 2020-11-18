@@ -14,22 +14,23 @@ export default {
         {
           name: 'PV',
           data: [256, 767, 1356, 2087, 803, 582, 432]
+        },
+        {
+          name: 'PV',
+          data: [256, 767, 1356, 2087, 803, 582, 432]
         }
       ]
     }
     this.chartSettings = {
-      label: {
-        formatter: '{c} ({d})'
-      },
-      labelLine: {
-        lineStyle: {
-          color: '#ffaaaa'
+      funnelLabel: [
+        {
+          position: 'left'
+        },
+        {
+          position: 'right',
+          formatter: '{c} ({d})'
         }
-      },
-      itemStyle: {
-        borderColor: '#fccf00',
-        borderWidth: 2
-      }
+      ]
     }
   }
 }

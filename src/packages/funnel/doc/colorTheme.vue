@@ -18,18 +18,7 @@ export default {
       ]
     }
     this.chartSettings = {
-      label: {
-        formatter: '{c} ({d})'
-      },
-      labelLine: {
-        lineStyle: {
-          color: '#ffaaaa'
-        }
-      },
-      itemStyle: {
-        borderColor: '#fccf00',
-        borderWidth: 2
-      }
+      colorTheme: 'cyan'
     }
   }
 }
