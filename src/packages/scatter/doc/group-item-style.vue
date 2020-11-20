@@ -540,7 +540,11 @@ module.exports = {
       yAxisScale: true,
       yAxisName: '体重',
       xAxisName: '身高',
-      xAxisNameLocation: 'end'
+      xAxisNameLocation: 'end',
+      itemStyle: {
+        borderColor: '#FFFFFF',
+        borderWidth: 1
+      }
     }
     this.chartExtend = {
       grid: {

@@ -24,3 +24,12 @@ npm run build:all
 ```
 
 ## 组件开发流程
+
+- 场景调研
+- Demo、API 制定
+- API 评审
+- 功能开发
+- 设计走查
+- 代码 Reivew
+
+> API 文档编写可以使用[tableconver](https://tableconvert.com/), 利用导入功能把之前的 md 内容导入，便于格式化修改

@@ -1,5 +1,5 @@
 <template>
-  <uix-scatter-chart :data="chartData" :settings="chartSettings" :height="340" />
+  <uix-scatter-chart :data="chartData" :settings="chartSettings" :legend-visible="false" :log="true" :height="340" />
 </template>
 
 <script>
@@ -40,14 +40,23 @@ export default {
       ]
     }
     this.chartSettings = {
-      itemStyle: {
-        normal: {
-          opacity: 0.8
-        }
-      },
       symbolSize: function (data) {
         return Math.sqrt(data[2]) / 5e2
       },
+      itemStyle: [
+        {
+          name: '当前城市',
+          color: 'rgba(57,105,254,0.20)',
+          borderColor: '#3969FE',
+          borderWidth: 1
+        },
+        {
+          name: '其他城市',
+          color: 'rgba(0,189,107,0.20)',
+          borderColor: '#00BD6B',
+          borderWidth: 1
+        }
+      ],
       markLine: [25000, 40]
     }
   }

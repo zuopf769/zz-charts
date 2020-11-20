@@ -1,3 +1,5 @@
+import { formatMeasure } from '@/utils'
+
 function getScatterDataset(data) {
   const dataset = []
   const { measures } = data
@@ -15,13 +17,43 @@ function getScatterDataset(data) {
   return dataset
 }
 
+function getScatterTooltip(args) {
+  let { data, settings, extra } = args
+  let { xAxisName, yAxisName, dataType = 'normal', digit = 0 } = settings
+  let { tooltipFormatter } = extra
+
+  if (!xAxisName) {
+    xAxisName = getDimessionName(data, 0)
+  }
+
+  if (!yAxisName) {
+    yAxisName = getDimessionName(data, 1)
+  }
+  return {
+    trigger: 'item',
+    confine: true,
+    formatter(item) {
+      if (tooltipFormatter) {
+        return tooltipFormatter.apply(null, arguments)
+      }
+      let tpl = []
+      tpl.push(item.marker)
+      tpl.push(`${item.seriesName}<br>`)
+      tpl.push(`${xAxisName}: ${formatMeasure(dataType, item.value[0], digit)}<br>`)
+      tpl.push(`${yAxisName}: ${formatMeasure(dataType, item.value[1], digit)}<br>`)
+      return tpl.join(' ')
+    }
+  }
+}
+
 function getScatterLegend(args) {
   const { settings } = args
-  const { legendType = 'plain', legendPadding = 5 } = settings
+  const { legendType = 'scroll', legendPadding = 5, legendSelectedMode = true } = settings
 
   return {
     type: legendType,
-    padding: legendPadding
+    padding: legendPadding,
+    selectedMode: legendSelectedMode
   }
 }
 
@@ -29,11 +61,8 @@ function getScatterLegend(args) {
 function getScatterLabel(setLabel) {
   const { position = 'top', ...others } = setLabel
   const formatter = params => {
-    const { value, seriesIndex } = params
-
-    // dataset formatter need shift the value
-    value.shift()
-    return value[seriesIndex]
+    const { value } = params
+    return `${value[0]},${value[1]}`
   }
   return {
     position,
@@ -98,17 +127,26 @@ function getScatterSeries(args) {
   return series
 }
 
+function getDimessionName(data, index) {
+  return (data.dimensions && data.dimensions.data && data.dimensions.data[index]) || ''
+}
 function getScatterXAxis(args) {
-  const { settings } = args
-  const { xAxisScale = false, xAxisMax, xAxisMin } = settings
+  const { data, settings } = args
+  let { xAxisName, xAxisScale = false, xAxisMax, xAxisMin, xAxisNameLocation = 'middle' } = settings
+
+  if (!xAxisName) {
+    xAxisName = getDimessionName(data, 0)
+  }
   return {
     min: xAxisMin,
     max: xAxisMax,
     scale: xAxisScale,
-    name: settings.dimensions && settings.dimensions[0],
-    nameLocation: 'middle',
+    name: xAxisName,
+    nameLocation: xAxisNameLocation,
     nameTextStyle: {
-      padding: [8, 0, 0, 0]
+      padding: [18, 0, 0, 0],
+      color: '#999999',
+      fontWeight: 600
     },
     axisLine: {
       lineStyle: {
@@ -133,18 +171,24 @@ function getScatterXAxis(args) {
 }
 
 function getScatterYAxis(args) {
-  const { settings } = args
-  const { yAxisScale = false, yAxisMax, yAxisMin } = settings
-
+  const { data, settings } = args
+  let { yAxisName = '', yAxisScale = false, yAxisMax, yAxisMin } = settings
+  if (!yAxisName) {
+    yAxisName = getDimessionName(data, 1)
+  }
   return {
     min: yAxisMin,
     max: yAxisMax,
     scale: yAxisScale,
-    name: settings.dimensions && settings.dimensions[1],
+    name: yAxisName,
     axisLine: {
       lineStyle: {
         color: '#EEEEEE'
       }
+    },
+    nameTextStyle: {
+      color: '#999999',
+      fontWeight: 600
     },
     axisLabel: {
       margin: 10,
@@ -164,21 +208,24 @@ function getScatterYAxis(args) {
 }
 
 export const scatter = (data, settings, extra) => {
-  const { legendVisible } = extra
+  const { legendVisible, tooltipVisible } = extra
 
   const dataset = getScatterDataset(data)
+
+  const tooltip = tooltipVisible && getScatterTooltip({ data, settings, extra })
 
   const legend = legendVisible && getScatterLegend({ settings })
 
   const series = getScatterSeries({ data, settings })
 
-  const xAxis = getScatterXAxis({ settings })
+  const xAxis = getScatterXAxis({ data, settings })
 
-  const yAxis = getScatterYAxis({ settings })
+  const yAxis = getScatterYAxis({ data, settings })
 
   // build echarts options
   const options = {
     dataset,
+    tooltip,
     legend,
     series,
     xAxis,

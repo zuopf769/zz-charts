@@ -43,11 +43,11 @@ function getLineTooltip(settings, extra) {
 
 function getLineLegend(args) {
   const { settings } = args
-  const { legendType = 'scroll', legendPadding = 5, selectedMode = true } = settings
+  const { legendType = 'scroll', legendPadding = 5, legendSelectedMode = true } = settings
   return {
     type: legendType,
     padding: legendPadding,
-    selectedMode
+    selectedMode: legendSelectedMode
   }
 }
 
@@ -237,14 +237,6 @@ function getLineSeries(args) {
   return series
 }
 
-function getGrid() {
-  return {
-    left: 10,
-    right: 10,
-    containLabel: true
-  }
-}
-
 export const line = (data, settings, extra) => {
   const { tooltipVisible, legendVisible, isEmptyData } = extra
 
@@ -261,8 +253,6 @@ export const line = (data, settings, extra) => {
 
   const series = !isEmptyData && getLineSeries({ data, settings })
 
-  const grid = getGrid(settings)
-
   // build echarts options
   const options = {
     dataset,
@@ -270,8 +260,7 @@ export const line = (data, settings, extra) => {
     legend,
     xAxis,
     yAxis,
-    series,
-    grid
+    series
   }
 
   return options

@@ -1,5 +1,5 @@
 <template>
-  <uix-scatter-chart :data="chartData" :height="340" />
+  <uix-scatter-chart :data="chartData" :legend-visible="false" :height="340" />
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
     }
     this.chartData = {
       dimensions: {
-        data: ['随机值']
+        data: ['随机值X', '随机值Y']
       },
       measures: [
         {

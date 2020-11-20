@@ -1,5 +1,5 @@
 <template>
-  <uix-scatter-chart :data="chartData" :settings="chartSettings" :height="340" />
+  <uix-scatter-chart :data="chartData" :settings="chartSettings" :tooltip-formatter="tooltipFormatter" :height="340" />
 </template>
 
 <script>
@@ -12,14 +12,16 @@ export default {
       measures: [
         {
           name: '当前城市',
-          data: [[37062, 75.4, 252847810, 'United States', 1990]]
+          data: [
+            [37062, 75.4, 252847810, '中国', 1990],
+            [47062, 55.4, 352847810, '美国', 1991]
+          ]
         },
         {
           name: '其他城市',
           data: [
             [28604, 77, 17096869, 'Australia', 1990],
             [31163, 77.4, 27662440, 'Canada', 1990],
-            [1516, 68, 1154605773, 'China', 1990],
             [13670, 44.7, 10582082, 'Cuba', 1990],
             [28599, 75, 4986705, 'Finland', 1990],
             [29476, 67.1, 56943299, 'France', 1990],
@@ -39,16 +41,57 @@ export default {
         }
       ]
     }
+
     this.chartSettings = {
-      itemStyle: {
-        normal: {
-          opacity: 0.8
+      itemStyle: [
+        {
+          name: '当前城市',
+          color: 'rgba(57,105,254,0.20)',
+          borderColor: '#3969FE',
+          borderWidth: 1
+        },
+        {
+          name: '其他城市',
+          color: 'rgba(0,189,107,0.20)',
+          borderColor: '#00BD6B',
+          borderWidth: 1
         }
-      },
+      ],
+      label: [
+        {
+          name: '当前城市',
+          show: true,
+          position: 'inside',
+          fontSize: 11,
+          formatter: function (params) {
+            return params.data[3]
+          },
+          color: '#3969FE'
+        },
+        {
+          name: '其他城市',
+          show: false,
+          position: 'inside',
+          fontSize: 11,
+          formatter: function (params) {
+            return params.data[3]
+          },
+          color: 'rgb(63,105,242)'
+        }
+      ],
       symbolSize: function (data) {
         return Math.sqrt(data[2]) / 5e2
       },
       markLine: [25000, 40]
+    }
+
+    this.tooltipFormatter = item => {
+      let tpl = []
+      tpl.push(item.marker)
+      tpl.push(`${item.value[3]}<br>`)
+      tpl.push(`综合毛利率: ${item.value[0]}<br>`)
+      tpl.push(`补贴率: ${item.value[1]}<br>`)
+      return tpl.join('')
     }
   }
 }

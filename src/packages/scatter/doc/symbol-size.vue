@@ -12,7 +12,7 @@ export default {
     }
     this.chartData = {
       dimensions: {
-        data: ['随机值']
+        data: ['随机值X', '随机值Y']
       },
       measures: [
         {
