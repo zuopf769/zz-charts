@@ -1,6 +1,7 @@
-import { cloneDeep, isNull, isEmpty, isUndefined, get } from 'lodash-es'
+import { cloneDeep, isNull, isEmpty, isUndefined, isArray, isObject, get } from 'lodash-es'
 import { getType } from '@/utils'
 import setExtend from '@/utils/extend'
+import setMark from '@/utils/mark'
 import { DEFAULT_THEME, DEFAULT_COLORS } from '@/constants'
 
 // expose echartsLib to user
@@ -11,7 +12,6 @@ import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/grid'
 import 'echarts/lib/component/legendScroll'
 import 'echarts/lib/component/dataset'
-import 'echarts/lib/component/markLine'
 
 export default {
   props: {
@@ -230,6 +230,23 @@ export default {
       }
       // Merge options
       let finalOptions = Object.assign(cloneDeep(this.options), options)
+
+      // marks
+      if (this.markArea || this.markLine || this.markPoint) {
+        const marks = {
+          markArea: this.markArea,
+          markLine: this.markLine,
+          markPoint: this.markPoint
+        }
+        const series = finalOptions.series
+        if (isArray(series)) {
+          series.forEach(item => {
+            setMark(item, marks)
+          })
+        } else if (isObject(series)) {
+          setMark(series, marks)
+        }
+      }
       // change inited echarts settings
       if (this.extend) {
         setExtend(finalOptions, this.extend)

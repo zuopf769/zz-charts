@@ -50,5 +50,23 @@
         "cnName": "散点图"
       }
     ]
+  },
+  {
+    "name": "其他",
+    "path": "/pc-demo",
+    "children": [
+      {
+        "path": "/pc-demo/event",
+        "cnName": "事件监听"
+      },
+      {
+        "path": "/pc-demo/props-demo1",
+        "cnName": "属性配置1"
+      },
+      {
+        "path": "/pc-demo/props-demo2",
+        "cnName": "属性配置2"
+      }
+    ]
   }
 ]

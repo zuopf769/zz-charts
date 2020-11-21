@@ -20,16 +20,8 @@ function getScatterDataset(data) {
 
 function getScatterTooltip(args) {
   let { data, settings, extra } = args
-  let { xAxisName, yAxisName, dataType = defaultDataType, digit = defaultDigit } = settings
+  let { dataType = defaultDataType, digit = defaultDigit } = settings
   let { tooltipFormatter } = extra
-
-  if (!xAxisName) {
-    xAxisName = getDimessionName(data, 0)
-  }
-
-  if (!yAxisName) {
-    yAxisName = getDimessionName(data, 1)
-  }
   return {
     trigger: 'item',
     confine: true,
@@ -40,8 +32,8 @@ function getScatterTooltip(args) {
       let tpl = []
       tpl.push(item.marker)
       tpl.push(`${item.seriesName}<br>`)
-      tpl.push(`${xAxisName}: ${formatMeasure(dataType[0], item.value[0], digit[0])}<br>`)
-      tpl.push(`${yAxisName}: ${formatMeasure(dataType[1], item.value[1], digit[1])}<br>`)
+      tpl.push(`${getDimessionName(data, 0)}: ${formatMeasure(dataType[0], item.value[0], digit[0])}<br>`)
+      tpl.push(`${getDimessionName(data, 1)}: ${formatMeasure(dataType[1], item.value[1], digit[1])}<br>`)
       return tpl.join(' ')
     }
   }

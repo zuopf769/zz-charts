@@ -81,7 +81,6 @@ function getLineMeaAxis(args) {
     thirdMeaAxis = [],
     yAxisScale = [],
     yAxisLabelType = [],
-    yAxisLabelDigits,
     yAxisName = [],
     yAxisInterval,
     yAxisMax,
@@ -121,7 +120,7 @@ function getLineMeaAxis(args) {
     if (yAxisLabelType[i]) {
       yAxis[i] = Object.assign({}, yAxisBase, {
         axisLabel: {
-          formatter: value => formatMeasure(yAxisLabelType[i], value, yAxisLabelDigits)
+          formatter: value => formatMeasure(yAxisLabelType[i], value)
         }
       })
     } else {

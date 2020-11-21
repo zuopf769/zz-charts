@@ -3,6 +3,8 @@
 </template>
 
 <script>
+// markLine需要单独导入
+import 'echarts/lib/component/markLine'
 export default {
   created() {
     this.chartData = {

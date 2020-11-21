@@ -8,8 +8,12 @@
 </template>
 
 <script>
+// 需要单独引入markArea
 import 'echarts/lib/component/markArea'
+// 需要单独引入markArea
+import 'echarts/lib/component/markLine'
 import Header from './components/header.vue'
+
 export default {
   name: 'App',
   components: {

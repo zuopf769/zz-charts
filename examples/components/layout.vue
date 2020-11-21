@@ -167,7 +167,7 @@ export default {
   }
 
   .table {
-    width: 100%;
+    // width: 100%;
     // table-layout: fixed;
     border-collapse: collapse;
     margin-bottom: 45px;
