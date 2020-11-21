@@ -133,7 +133,14 @@ function getDimessionName(data, index) {
 }
 function getScatterXAxis(args) {
   const { data, settings } = args
-  let { xAxisName, xAxisScale = false, xAxisMax, xAxisMin, xAxisNameLocation = 'middle' } = settings
+  let {
+    xAxisName,
+    xAxisScale = false,
+    xAxisMax,
+    xAxisMin,
+    xAxisNameLocation = 'middle',
+    dataType = defaultDataType
+  } = settings
 
   if (!xAxisName) {
     xAxisName = getDimessionName(data, 0)
@@ -157,7 +164,11 @@ function getScatterXAxis(args) {
     axisLabel: {
       margin: 10,
       fontWeight: 400,
-      color: '#666666'
+      color: '#666666',
+      formatter(val) {
+        // x轴数据格式化小数位取整
+        return formatMeasure(dataType[0], val)
+      }
     },
     axisTick: {
       show: false
@@ -173,7 +184,7 @@ function getScatterXAxis(args) {
 
 function getScatterYAxis(args) {
   const { data, settings } = args
-  let { yAxisName = '', yAxisScale = false, yAxisMax, yAxisMin } = settings
+  let { yAxisName = '', yAxisScale = false, yAxisMax, yAxisMin, dataType = defaultDataType } = settings
   if (!yAxisName) {
     yAxisName = getDimessionName(data, 1)
   }
@@ -194,7 +205,11 @@ function getScatterYAxis(args) {
     axisLabel: {
       margin: 10,
       fontWeight: 400,
-      color: '#666666'
+      color: '#666666',
+      formatter(val) {
+        // y轴数据格式化小数位取整
+        return formatMeasure(dataType[1], val)
+      }
     },
     axisTick: {
       show: false
