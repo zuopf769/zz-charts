@@ -536,6 +536,7 @@ module.exports = {
       ]
     }
     this.chartSettings = {
+      digit: 1,
       xAxisScale: true,
       yAxisScale: true,
       yAxisName: '体重',

@@ -1,17 +1,14 @@
 import { formatMeasure } from '@/utils'
 
 function getScatterDataset(data) {
-  const dataset = []
   const { measures } = data
-
-  if (Array.isArray(measures)) {
+  const dataset = []
+  if (Array.isArray(measures) && measures.length) {
     measures.forEach(v => {
       dataset.push({
-        ['source']: v.data
+        source: v.data
       })
     })
-  } else {
-    return
   }
 
   return dataset
