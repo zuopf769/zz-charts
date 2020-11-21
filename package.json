@@ -9,7 +9,7 @@
     "bootstrap": "npm i",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build-script/webpack.demo.conf.js",
     "build": "npm run deploy:doc",
-    "build:all": "rm -f -r lib && build:common",
+    "build:all": "rm -f -r lib && npm run build:common",
     "build:component": "cross-env NODE_ENV=production webpack --config build-script/webpack.component.conf.js",
     "build:common": "cross-env NODE_ENV=production webpack --config build-script/webpack.all.conf.js",
     "deploy:doc": "cross-env NODE_ENV=production webpack --config build-script/webpack.demo.conf.js",
