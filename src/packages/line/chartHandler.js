@@ -24,7 +24,7 @@ function getLineTooltip(settings, extra) {
       items.forEach(({ seriesName, data, seriesIndex, marker }) => {
         let showData = null
         const itemData = isArray(data) ? data[seriesIndex + 1] : data
-        let type = 'normal'
+        let type = yAxisLabelType[0] || 'normal'
         if (~secondMeaAxis.indexOf(seriesName)) {
           type = yAxisLabelType[1] || 'noraml'
         }

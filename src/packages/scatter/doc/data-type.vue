@@ -536,16 +536,13 @@ module.exports = {
       ]
     }
     this.chartSettings = {
-      digit: [1, 1],
       xAxisScale: true,
       yAxisScale: true,
       yAxisName: '体重',
       xAxisName: '身高',
       xAxisNameLocation: 'end',
-      itemStyle: {
-        borderColor: '#FFFFFF',
-        borderWidth: 1
-      }
+      dataType: ['normal', 'normal'],
+      digit: [1, 1]
     }
     this.chartExtend = {
       grid: {

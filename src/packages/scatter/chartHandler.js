@@ -1,4 +1,8 @@
+import { isArray } from 'lodash-es'
 import { formatMeasure } from '@/utils'
+
+const defaultDataType = ['normal', 'normal']
+const defaultDigit = [0, 0]
 
 function getScatterDataset(data) {
   const { measures } = data
@@ -16,7 +20,7 @@ function getScatterDataset(data) {
 
 function getScatterTooltip(args) {
   let { data, settings, extra } = args
-  let { xAxisName, yAxisName, dataType = 'normal', digit = 0 } = settings
+  let { xAxisName, yAxisName, dataType = defaultDataType, digit = defaultDigit } = settings
   let { tooltipFormatter } = extra
 
   if (!xAxisName) {
@@ -36,8 +40,8 @@ function getScatterTooltip(args) {
       let tpl = []
       tpl.push(item.marker)
       tpl.push(`${item.seriesName}<br>`)
-      tpl.push(`${xAxisName}: ${formatMeasure(dataType, item.value[0], digit)}<br>`)
-      tpl.push(`${yAxisName}: ${formatMeasure(dataType, item.value[1], digit)}<br>`)
+      tpl.push(`${xAxisName}: ${formatMeasure(dataType[0], item.value[0], digit[0])}<br>`)
+      tpl.push(`${yAxisName}: ${formatMeasure(dataType[1], item.value[1], digit[1])}<br>`)
       return tpl.join(' ')
     }
   }
@@ -94,7 +98,7 @@ function getScatterSeries(args) {
   data.measures.forEach(({ name }, i) => {
     // label数据类型调整为对象或者数组，Object类型为全部数据维度添加配置，Array类型根据每项name名字去修改配置
     let setLabel = {}
-    if (label instanceof Array) {
+    if (isArray(label)) {
       setLabel = label.filter(item => item.name === name)[0]
       if (setLabel === undefined) {
         setLabel = {}
@@ -105,7 +109,7 @@ function getScatterSeries(args) {
 
     // itemStyle为对象或者数组，Object类型为全部数据维度添加配置，Array类型根据每项name名字去修改配置
     let setItemStyle = {}
-    if (itemStyle instanceof Array) {
+    if (isArray(itemStyle)) {
       setItemStyle = itemStyle.find(item => item.name === name) || {}
     } else {
       setItemStyle = itemStyle

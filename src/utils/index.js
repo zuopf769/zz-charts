@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { zip, sum, round, cloneDeep, isNaN, isUndefined } from 'lodash-es'
+import { zip, sum, round, cloneDeep, isNaN, isUndefined, isFunction } from 'lodash-es'
 import numeral from 'numeral'
 import './formatZhNumber'
 export * from './color'
@@ -109,6 +109,8 @@ const formatMeasure = (type, value, digits = 0) => {
         return value
     }
   }
+
+  if (isFunction(type)) return type(value, numeral)
   return transformType(type, value, digits)
 }
 

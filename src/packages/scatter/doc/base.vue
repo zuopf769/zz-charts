@@ -1,5 +1,5 @@
 <template>
-  <uix-scatter-chart :data="chartData" :legend-visible="false" :height="340" />
+  <uix-scatter-chart :data="chartData" :settings="chartSettings" :legend-visible="false" :height="340" />
 </template>
 
 <script>
@@ -20,6 +20,10 @@ export default {
           data: randomData
         }
       ]
+    }
+
+    this.chartSettings = {
+      digit: [2, 2]
     }
   },
   methods: {

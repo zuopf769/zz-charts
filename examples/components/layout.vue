@@ -81,7 +81,11 @@ export default {
   h2,
   h3,
   h4,
-  h5,
+  h5 {
+    font-weight: 600;
+    margin-top: 0;
+  }
+
   p {
     margin-top: 0;
   }
@@ -109,6 +113,11 @@ export default {
   h3 {
     font-size: 20px;
     margin-bottom: 20px;
+  }
+
+  h4,
+  h5 {
+    margin-bottom: 10px;
   }
   p {
     margin-bottom: 12px;
@@ -153,6 +162,10 @@ export default {
     color: @color-blue;
   }
 
+  ul > li {
+    margin-bottom: 5px;
+  }
+
   .table {
     width: 100%;
     // table-layout: fixed;
@@ -174,6 +187,10 @@ export default {
       border-bottom: @border;
       max-width: 200px;
     }
+  }
+
+  .vuep {
+    margin-bottom: 10px;
   }
 }
 </style>

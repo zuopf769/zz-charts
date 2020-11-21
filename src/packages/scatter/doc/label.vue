@@ -7,7 +7,7 @@ export default {
   created() {
     this.chartData = {
       dimensions: {
-        data: ['综合毛利率', '补贴率']
+        data: ['销售额', '补贴率']
       },
       measures: [
         {

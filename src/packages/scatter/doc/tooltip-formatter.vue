@@ -7,7 +7,7 @@ export default {
   created() {
     this.chartData = {
       dimensions: {
-        data: ['综合毛利率', '补贴率']
+        data: ['销售额', '补贴率']
       },
       measures: [
         {
@@ -89,8 +89,8 @@ export default {
       let tpl = []
       tpl.push(item.marker)
       tpl.push(`${item.value[3]}<br>`)
-      tpl.push(`综合毛利率: ${item.value[0]}<br>`)
-      tpl.push(`补贴率: ${item.value[1]}<br>`)
+      tpl.push(`销售额: ${item.value[0]}<br>`)
+      tpl.push(`补贴率: ${item.value[1]}%<br>`)
       return tpl.join('')
     }
   }

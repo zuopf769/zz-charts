@@ -12,6 +12,10 @@
         "cnName": "基本属性"
       },
       {
+        "path": "/pc-demo/data",
+        "cnName": "数据"
+      },
+      {
         "path": "/pc-demo/contributing",
         "cnName": "贡献指南"
       }

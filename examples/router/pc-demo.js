@@ -12,7 +12,8 @@ function loadDocs(component) {
 // 基础路由
 let baseRoutes = [
   { path: 'started', component: loadWiki('getting-started') },
-  { path: 'options', component: loadWiki('getting-started') },
+  { path: 'options', component: loadWiki('options') },
+  { path: 'data', component: loadWiki('data') },
   { path: 'contributing', component: loadWiki('contributing') }
 ]
 

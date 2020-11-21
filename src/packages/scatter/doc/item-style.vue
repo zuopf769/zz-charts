@@ -7,7 +7,7 @@ export default {
   created() {
     this.chartData = {
       dimensions: {
-        data: ['综合毛利率', '补贴率']
+        data: ['销售额', '补贴率']
       },
       measures: [
         {
@@ -43,6 +43,7 @@ export default {
       symbolSize: function (data) {
         return Math.sqrt(data[2]) / 5e2
       },
+      yAxisName: '补贴率%',
       itemStyle: [
         {
           name: '当前城市',

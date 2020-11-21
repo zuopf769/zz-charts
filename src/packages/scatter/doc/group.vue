@@ -541,7 +541,7 @@ module.exports = {
       yAxisName: '体重',
       xAxisName: '身高',
       xAxisNameLocation: 'end',
-      digit: 1
+      digit: [1, 1]
     }
     this.chartExtend = {
       grid: {
