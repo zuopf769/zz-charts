@@ -8,10 +8,12 @@
 </template>
 
 <script>
-// 需要单独引入markArea
+// 需要单独引入的模块
 import 'echarts/lib/component/markArea'
-// 需要单独引入markArea
 import 'echarts/lib/component/markLine'
+import 'echarts/lib/component/markPoint'
+import 'echarts/lib/component/visualMap'
+
 import Header from './components/header.vue'
 
 export default {

@@ -58,18 +58,7 @@ function getLineDimAxis(args) {
     type,
     boundaryGap: false,
     axisTick: {
-      alignWithLabel: true,
       inside: true
-    },
-    axisLabel: {
-      margin: 10,
-      fontWeight: 400,
-      color: '#666666'
-    },
-    axisLine: {
-      lineStyle: {
-        color: '#EEEEEE'
-      }
     }
   }
 }
@@ -100,19 +89,6 @@ function getLineMeaAxis(args) {
       },
       axisTick: {
         show: false
-      },
-      axisLabel: {
-        color: '#666666'
-      },
-      nameTextStyle: {
-        color: '#999999',
-        fontWeight: 600
-      },
-      splitLine: {
-        lineStyle: {
-          color: '#EEEEEE',
-          type: 'dotted'
-        }
       },
       min: percentage ? 0 : null,
       max: percentage ? 1 : null

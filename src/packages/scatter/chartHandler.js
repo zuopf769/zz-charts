@@ -144,19 +144,10 @@ function getScatterXAxis(args) {
     name: xAxisName,
     nameLocation: xAxisNameLocation,
     nameTextStyle: {
-      padding: [18, 0, 0, 0],
-      color: '#999999',
-      fontWeight: 600
-    },
-    axisLine: {
-      lineStyle: {
-        color: '#EEEEEE'
-      }
+      padding: [18, 0, 0, 0]
     },
     axisLabel: {
       margin: 10,
-      fontWeight: 400,
-      color: '#666666',
       formatter(val) {
         // x轴数据格式化小数位取整
         return formatMeasure(dataType[0], val)
@@ -164,12 +155,6 @@ function getScatterXAxis(args) {
     },
     axisTick: {
       show: false
-    },
-    splitLine: {
-      lineStyle: {
-        type: 'dashed',
-        color: '#EEEEEE'
-      }
     }
   }
 }
@@ -185,19 +170,8 @@ function getScatterYAxis(args) {
     max: yAxisMax,
     scale: yAxisScale,
     name: yAxisName,
-    axisLine: {
-      lineStyle: {
-        color: '#EEEEEE'
-      }
-    },
-    nameTextStyle: {
-      color: '#999999',
-      fontWeight: 600
-    },
     axisLabel: {
       margin: 10,
-      fontWeight: 400,
-      color: '#666666',
       formatter(val) {
         // y轴数据格式化小数位取整
         return formatMeasure(dataType[1], val)
@@ -205,12 +179,6 @@ function getScatterYAxis(args) {
     },
     axisTick: {
       show: false
-    },
-    splitLine: {
-      lineStyle: {
-        type: 'dashed',
-        color: '#EEEEEE'
-      }
     }
   }
 }

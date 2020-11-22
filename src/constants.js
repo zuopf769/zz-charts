@@ -9,9 +9,46 @@ export const options = {
 
 export const contrastColor = '#666666'
 export const titleColor = '#999999'
-export const splitLineColor = '#eeeeee'
+export const lineColor = '#eeeeee'
 export const labelColor = '#333333'
 export const labelLineColor = '#cccccc'
+export const whiteColor = '#ffffff'
+
+function axisCommon() {
+  return {
+    nameTextStyle: {
+      color: titleColor,
+      fontWeight: 600
+    },
+    axisLine: {
+      lineStyle: {
+        color: lineColor
+      }
+    },
+    axisTick: {
+      alignWithLabel: true,
+      lineStyle: {
+        color: lineColor
+      }
+    },
+    axisLabel: {
+      margin: 10,
+      fontWeight: 400,
+      color: contrastColor
+    },
+    splitLine: {
+      lineStyle: {
+        type: 'dashed',
+        color: lineColor
+      }
+    },
+    splitArea: {
+      areaStyle: {
+        color: contrastColor
+      }
+    }
+  }
+}
 
 export const DEFAULT_THEME = {
   grid: {
@@ -25,11 +62,23 @@ export const DEFAULT_THEME = {
     },
     pageIconSize: 8
   },
+  timeAxis: axisCommon(),
+  logAxis: axisCommon(),
+  valueAxis: axisCommon(),
+  categoryAxis: axisCommon(),
+  line: {
+    symbol: 'circle',
+    symbolSize: 6,
+    itemStyle: {
+      borderColor: whiteColor,
+      bordeerWidth: 1
+    }
+  },
   pie: {
     itemStyle: {
       borderType: 'solid',
       borderWidth: '2',
-      borderColor: '#ffffff'
+      borderColor: whiteColor
     },
     label: {
       color: labelColor,
@@ -55,7 +104,8 @@ export const DEFAULT_THEME = {
         color: labelLineColor
       }
     }
-  }
+  },
+  scatter: {}
 }
 
 export const itemPoint = color => {

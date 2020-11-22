@@ -16,6 +16,10 @@
         "cnName": "数据"
       },
       {
+        "path": "/pc-demo/theme",
+        "cnName": "样式"
+      },
+      {
         "path": "/pc-demo/contributing",
         "cnName": "贡献指南"
       }
@@ -56,7 +60,7 @@
     "path": "/pc-demo",
     "children": [
       {
-        "path": "/pc-demo/event",
+        "path": "/pc-demo/events",
         "cnName": "事件监听"
       },
       {

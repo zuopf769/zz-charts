@@ -14,7 +14,11 @@ let baseRoutes = [
   { path: 'started', component: loadWiki('getting-started') },
   { path: 'options', component: loadWiki('options') },
   { path: 'data', component: loadWiki('data') },
-  { path: 'contributing', component: loadWiki('contributing') }
+  { path: 'theme', component: loadWiki('theme') },
+  { path: 'contributing', component: loadWiki('contributing') },
+  { path: 'events', component: loadWiki('events') },
+  { path: 'props-demo1', component: loadWiki('props-1') },
+  { path: 'props-demo2', component: loadWiki('props-2') }
 ]
 
 // 图表路由

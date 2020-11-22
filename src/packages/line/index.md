@@ -64,9 +64,9 @@
 :::include(src="./doc/series-label.vue")
 :::
 
-## markArea
+## echarts style 配置
 
-:::include(src="./doc/markArea.vue")
+:::include(src="./doc/echarts-style.vue")
 :::
 
 ## settings 配置项
