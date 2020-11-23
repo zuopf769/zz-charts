@@ -3,8 +3,6 @@
 </template>
 
 <script>
-// markLine需要单独导入
-import 'echarts/lib/component/markLine'
 export default {
   created() {
     this.chartData = {
@@ -51,8 +49,7 @@ export default {
       },
       symbolSize: function (data) {
         return Math.sqrt(data[2]) / 5e2
-      },
-      markLine: [25000, 40]
+      }
     }
   }
 }

@@ -10,7 +10,7 @@
 npm i @xgfe/uix-charts echarts -S
 ```
 
-## 引入 VeCharts
+## 引入 UixCharts
 
 安装完成后，即可使用 `import` 或 `require` 使用。
 

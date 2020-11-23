@@ -20,7 +20,7 @@
 :::include(src="./doc/group-item-style.vue")
 :::
 
-## 象限散点图
+## 散点图
 
 :::include(src="./doc/mark-line.vue")
 :::
