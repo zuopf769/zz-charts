@@ -1,3 +1,4 @@
+import UixChart from './packages/chart'
 import UixLineChart from './packages/line'
 import UixBarChart from './packages/bar'
 import UixPieChart from './packages/pie'
@@ -5,7 +6,7 @@ import UixDonutChart from './packages/donut'
 import UixFunnelChart from './packages/funnel'
 import UixScatterChart from './packages/scatter'
 
-const components = [UixLineChart, UixBarChart, UixPieChart, UixDonutChart, UixFunnelChart, UixScatterChart]
+const components = [UixChart, UixLineChart, UixBarChart, UixPieChart, UixDonutChart, UixFunnelChart, UixScatterChart]
 
 const install = Vue => {
   if (install.installed) return
@@ -23,6 +24,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export default {
   install,
+  UixChart,
   UixLineChart,
   UixBarChart,
   UixPieChart,

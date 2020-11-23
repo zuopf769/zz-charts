@@ -1,4 +1,5 @@
 {
+  "chart": "./src/packages/chart/index.js",
   "line": "./src/packages/line/index.js",
   "bar": "./src/packages/bar/index.js",
   "pie": "./src/packages/pie/index.js",

@@ -4,3 +4,8 @@
 
 :::include(src="../../../src/packages/line/doc/mark-line.vue")
 :::
+
+## 设置 dataZoom
+
+:::include(src="../../../src/packages/line/doc/data-zoom.vue")
+:::

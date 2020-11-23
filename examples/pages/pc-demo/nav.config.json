@@ -64,6 +64,10 @@
         "cnName": "事件监听"
       },
       {
+        "path": "/pc-demo/change-type",
+        "cnName": "图表切换"
+      },
+      {
         "path": "/pc-demo/props-demo1",
         "cnName": "属性配置1"
       },

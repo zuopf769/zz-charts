@@ -2,7 +2,7 @@ import { cloneDeep, isNull, isEmpty, isUndefined, isArray, isObject, get } from 
 import { getType } from '@/utils'
 import setExtend from '@/utils/extend'
 import setMark from '@/utils/mark'
-import { DEFAULT_THEME, DEFAULT_COLORS } from '@/constants'
+import { options, DEFAULT_THEME, DEFAULT_COLORS } from '@/constants'
 
 // expose echartsLib to user
 import echartsLib from 'echarts/lib/echarts'
@@ -138,7 +138,11 @@ export default {
     },
     settings: {
       deep: true,
-      handler() {
+      handler(v) {
+        if (v.type && this.chartLib) {
+          this.chartHandler = this.chartLib[v.type]
+          this.options = options
+        }
         this.dataHandler(this.data)
       }
     }

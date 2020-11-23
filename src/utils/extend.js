@@ -1,10 +1,6 @@
 import { set, isArray, isObject } from 'lodash-es'
 
 export default function (options, extend) {
-  let obj = JSON.parse(JSON.stringify(options))
-  Object.keys(extend).forEach(() => {
-    set(obj, 'yAxis[1].axisLabel.formater', '{value}%')
-  })
   Object.keys(extend).forEach(attr => {
     const value = extend[attr]
     if (~attr.indexOf('.')) {

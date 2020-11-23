@@ -17,6 +17,7 @@ let baseRoutes = [
   { path: 'theme', component: loadWiki('theme') },
   { path: 'contributing', component: loadWiki('contributing') },
   { path: 'events', component: loadWiki('events') },
+  { path: 'change-type', component: loadWiki('change-type') },
   { path: 'props-demo1', component: loadWiki('props-1') },
   { path: 'props-demo2', component: loadWiki('props-2') }
 ]

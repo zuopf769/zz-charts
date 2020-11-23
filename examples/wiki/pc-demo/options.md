@@ -61,3 +61,59 @@ markArea -> echarts/lib/component/markArea
 ```javascript
 import '@xgfe/uix-charts/lib/uix-charts.css'
 ```
+
+### 钩子函数
+
+共有属性中的钩子函数用于在配置项生成过程中进行调整以及获取实例。
+
+| 配置项                | 说明                                                                | 类型                                 |
+| --------------------- | ------------------------------------------------------------------- | ------------------------------------ |
+| before-config         | 对数据提前进行额外的处理，在数据转换为配置项开始前触发              | 参数为 data,返回值为表格数据         |
+| after-config          | 对生成好的 echarts 配置进行额外的处理，在数据转化为配置项结束后触发 | 参数为 options,返回值为 echarts 配置 |
+| after-set-option      | 生成图表之后获取 echarts 实例                                       | 参数为 echarts 实例                  |
+| after-set-option-once | 生成图表之后获取 echarts 实例(只执行一次)                           | 参数为 echarts 实例                  |
+
+### extend 属性
+
+为了能够更方便的设置属性配置项等，可以通过 `extend` 属性实现对已配置好的内部属性进行单独的设置， `extend` 为对象类型，对象内的属性可以是函数，也可以对象，也可以是其他类型的值
+
+- 当属性为函数时，设置的是函数的返回值
+- 当属性为对象时，如果在 `options` 中对应的属性为对象(eg: tooltip)或包含对象的数组(eg: series)， 对应的配置会被合并，否则将直接覆盖对应的配置
+
+### echarts options 属性
+
+与 echarts 配置项对应的属性也被加到了组件上，用于直接覆盖 options 原有的对应属性，使用方式可参考[文档](https://echarts.apache.org/zh/option.html#title)
+
+```javascript
+grid: [object, array],
+colors: array,
+visualMap: [object, array],
+dataZoom: [object, array],
+toolbox: [object, array],
+title: object,
+legend: [object, array],
+xAxis: [object, array],
+yAxis: [object, array],
+radar: object,
+tooltip: object,
+axisPointer: object,
+brush: [object, array],
+geo: object,
+timeline: [object, array],
+graphic: [object, array],
+series: [object, array],
+backgroundColor: [object, string],
+textStyle: object,
+animation: object
+```
+
+如果某属性加上去之后没有生效，很可能是没有引入相应的模块，模块的位置可以参考此[文件](https://github.com/apache/incubator-echarts/blob/4.8.0/index.js)
+
+### 事件
+
+渲染成功后会通过事件传递给父组件。
+
+| 配置项     | 简介                                     |
+| ---------- | ---------------------------------------- |
+| ready      | 图表渲染完成后触发，每次渲染都会触发一次 |
+| ready-once | 只会在首次渲染完成后触发                 |

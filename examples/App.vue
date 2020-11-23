@@ -12,6 +12,7 @@
 import 'echarts/lib/component/markArea'
 import 'echarts/lib/component/markLine'
 import 'echarts/lib/component/markPoint'
+import 'echarts/lib/component/dataZoom'
 import 'echarts/lib/component/visualMap'
 
 import Header from './components/header.vue'

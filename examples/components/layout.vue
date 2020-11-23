@@ -143,6 +143,7 @@ export default {
     margin: 0 2px;
     padding: 3px 5px;
     white-space: pre-wrap;
+    line-height: 1.5rem;
   }
 
   blockquote {
@@ -163,7 +164,18 @@ export default {
   }
 
   ul > li {
+    margin-left: 18px;
     margin-bottom: 5px;
+    list-style: disc;
+
+    &::marker {
+      unicode-bidi: isolate;
+      font-variant-numeric: tabular-nums;
+      text-transform: none;
+      text-indent: 0px !important;
+      text-align: start !important;
+      text-align-last: start !important;
+    }
   }
 
   .table {
