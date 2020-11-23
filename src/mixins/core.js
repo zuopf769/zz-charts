@@ -7,7 +7,6 @@ import { options, DEFAULT_THEME, DEFAULT_COLORS } from '@/constants'
 // expose echartsLib to user
 import echartsLib from 'echarts/lib/echarts'
 // default echarts's component in VeCharts
-import 'echarts/lib/component/title'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/grid'
 import 'echarts/lib/component/legendScroll'

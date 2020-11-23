@@ -9,6 +9,7 @@
 
 <script>
 // 需要单独引入的模块
+import 'echarts/lib/component/title'
 import 'echarts/lib/component/markArea'
 import 'echarts/lib/component/markLine'
 import 'echarts/lib/component/markPoint'
