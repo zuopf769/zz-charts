@@ -22,6 +22,10 @@
       {
         "path": "/pc-demo/contributing",
         "cnName": "贡献指南"
+      },
+      {
+        "path": "/pc-demo/change-log",
+        "cnName": "更新日志"
       }
     ]
   },

@@ -9,6 +9,10 @@ function loadDocs(component) {
   return () => import(`../../src/packages/${component}/index.md`)
 }
 
+function loadChangelog() {
+  return () => import(`../../CHANGELOG.md`)
+}
+
 // 基础路由
 let baseRoutes = [
   { path: 'started', component: loadWiki('getting-started') },
@@ -16,6 +20,7 @@ let baseRoutes = [
   { path: 'data', component: loadWiki('data') },
   { path: 'theme', component: loadWiki('theme') },
   { path: 'contributing', component: loadWiki('contributing') },
+  { path: 'change-log', component: loadChangelog() },
   { path: 'events', component: loadWiki('events') },
   { path: 'change-type', component: loadWiki('change-type') },
   { path: 'props-demo1', component: loadWiki('props-1') },
