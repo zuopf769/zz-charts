@@ -4,6 +4,11 @@
   "description": "Vue2.x Charts Components Based ECharts4.x",
   "main": "lib/uix-charts.common.js",
   "typings": "types/index.d.ts",
+  "files": [
+    "lib",
+    "src",
+    "types"
+  ],
   "author": "",
   "scripts": {
     "bootstrap": "npm i",
