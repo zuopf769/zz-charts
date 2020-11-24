@@ -200,7 +200,7 @@ function getBarSeries(data, settings, isBar) {
     // label数据类型调整为对象或者数组，Object类型为全部数据维度添加配置，Array类型根据每项name名字去修改配置
     let setLabel = {}
     if (label instanceof Array) {
-      setLabel = label.filter(item => item.name === name)[0]?.config
+      setLabel = label.filter(item => item.name === name)[0]
       if (setLabel === undefined) {
         setLabel = {}
       }

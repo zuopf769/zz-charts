@@ -38,16 +38,12 @@ export default {
       label: [
         {
           name: '访问用户',
-          config: {
-            show: true
-          }
+          show: true
         },
         {
           name: '下单率',
-          config: {
-            show: true,
-            fontWeight: 'bold'
-          }
+          show: true,
+          fontWeight: 'bold'
         }
       ]
     }
