@@ -1,9 +1,10 @@
 import { options, waterfallConfig } from '@/constants'
-import { getDataset, getStackMap } from '@/utils'
+import { getDataset, getStackMap, formatMeasure } from '@/utils'
+import { isArray } from 'lodash-es'
 
 // build tooltip
 function getBarTooltip(settings) {
-  const { tooltipFormatter } = settings
+  const { tooltipFormatter, meaAxisType, secondMeaAxis = [], thirdMeaAxis = [], meaAxisDigits } = settings
   return {
     trigger: 'axis',
     // 坐标轴指示器，坐标轴触发有效
@@ -11,7 +12,25 @@ function getBarTooltip(settings) {
       // 默认为直线，可选为：'line' | 'shadow'
       type: 'shadow'
     },
-    formatter: tooltipFormatter
+    formatter(items) {
+      if (typeof tooltipFormatter === 'function') {
+        return tooltipFormatter.apply(null, arguments)
+      }
+      let tpl = []
+      const { name, axisValueLabel } = items[0]
+      const title = name || axisValueLabel
+      tpl.push(`${title}<br>`)
+      items.forEach(({ seriesName, data, seriesIndex, marker }) => {
+        const itemData = isArray(data) ? data[seriesIndex + 1] : data
+        const meaIndex = getMeaAxisIndex(secondMeaAxis, thirdMeaAxis, seriesName)
+        let type = meaAxisType[meaIndex]
+        let showData = formatMeasure(type, itemData, meaAxisDigits[meaIndex])
+        tpl.push(marker)
+        tpl.push(`${seriesName}: ${showData}`)
+        tpl.push('<br>')
+      })
+      return tpl.join('')
+    }
   }
 }
 
@@ -21,7 +40,8 @@ function getBarLegend(data, settings) {
   const { legendType, legendPadding, waterfall } = settings
   let result = {
     type: legendType || 'scroll',
-    padding: legendPadding || 5
+    padding: legendPadding || 5,
+    itemGap: 16
   }
 
   // 当配置项填入waterfall,瀑布图默认将图例去除secondaryMeasure
@@ -39,7 +59,7 @@ function getBarLegend(data, settings) {
 function getBarGrid(isBar) {
   const BarGrid = {
     right: 30,
-    bottom: 10,
+    top: 10,
     left: 30,
     containLabel: true
   }
@@ -67,13 +87,28 @@ function getBarDimAxis(settings) {
 
 // build measure axis
 function getBarMeaAxis(settings) {
-  const { meaAxisType, yAxisScale = false, percentage = false, yAxisName, yAxisInterval, yAxisMax, yAxisMin } = settings
+  const {
+    meaAxisType,
+    meaAxisDigits,
+    yAxisScale = false,
+    percentage = false,
+    yAxisName,
+    yAxisInterval,
+    yAxisMax,
+    yAxisMin
+  } = settings
 
   const meaAxisBase = {
     type: 'value',
     scale: yAxisScale,
     axisTick: {
       show: false
+    },
+    axisLine: {
+      show: false
+    },
+    nameTextStyle: {
+      align: 'center'
     },
     min: percentage ? 0 : null,
     max: percentage ? 1 : null
@@ -83,7 +118,10 @@ function getBarMeaAxis(settings) {
   meaAxisType.forEach((type, i) => {
     const axisLabel = {
       margin: 10,
-      fontWeight: 400
+      fontWeight: 400,
+      formatter: function (value) {
+        return formatMeasure(type, value, meaAxisDigits[i])
+      }
     }
     const axisItem = {
       ...meaAxisBase,
@@ -103,20 +141,24 @@ function getBarMeaAxis(settings) {
     if (percentage === false && yAxisMin && yAxisMin.length) {
       axisItem['min'] = yAxisMin[i]
     }
+    // 三Y轴时，需要为第三条Y轴设置偏移
+    if (i === 2) {
+      axisItem.offset = 60
+    }
     meaAxis.push(axisItem)
   })
   return meaAxis
 }
 
 // build label
-function getBarLabel(setLabel, isBar) {
+function getBarLabel(setLabel, isBar, axisType, axisDigit) {
   const { position = isBar ? 'right' : 'top', ...others } = setLabel
   const formatter = params => {
     const { value, seriesIndex } = params
 
     // dataset formatter need shift the value
     value.shift()
-    return value[seriesIndex]
+    return formatMeasure(axisType, value[seriesIndex], axisDigit)
   }
   return {
     position,
@@ -124,11 +166,31 @@ function getBarLabel(setLabel, isBar) {
     ...others
   }
 }
+function getMeaAxisIndex(secondMeaAxis, thirdMeaAxis, name) {
+  if (secondMeaAxis.includes(name)) {
+    return '1'
+  }
+  if (thirdMeaAxis.includes(name)) {
+    return '2'
+  }
+  return '0'
+}
 
 // build series
 function getBarSeries(data, settings, isBar) {
   const { measures } = data
-  const { label = {}, showLine = [], stack = null, secondMeaAxis = [], itemStyle = {}, waterfall, ...others } = settings
+  const {
+    label = {},
+    showLine = [],
+    stack = null,
+    secondMeaAxis = [],
+    thirdMeaAxis = [],
+    itemStyle = {},
+    waterfall,
+    meaAxisType,
+    meaAxisDigits,
+    ...others
+  } = settings
 
   const axisIndexName = isBar ? 'xAxisIndex' : 'yAxisIndex'
   const series = []
@@ -147,12 +209,13 @@ function getBarSeries(data, settings, isBar) {
     }
     // ------------end-----------
     const type = showLine.includes(name) ? 'line' : 'bar'
+    const meaIndex = getMeaAxisIndex(secondMeaAxis, thirdMeaAxis, name)
     const seriesItem = {
       type,
       name,
-      label: getBarLabel(setLabel, isBar),
+      label: getBarLabel(setLabel, isBar, meaAxisType[meaIndex], meaAxisDigits[meaIndex]),
       stack: stack && stackMap[name],
-      [axisIndexName]: secondMeaAxis.includes(name) ? '1' : '0',
+      [axisIndexName]: meaIndex,
       itemStyle: itemStyle[name] ? itemStyle[name] : {},
       ...others
     }
@@ -171,11 +234,12 @@ export const bar = (data, settings, extra) => {
   const {
     direction = 'column',
     secondMeaAxis = null,
+    thirdMeaAxis = null,
     yAxisLabelType,
-    yAxisLabelDigits = 0,
+    yAxisLabelDigits = null,
     yAxisName,
     xAxisLabelType,
-    xAxisLabelDigits = 0,
+    xAxisLabelDigits = null,
     xAxisName
   } = settings
 
@@ -186,21 +250,24 @@ export const bar = (data, settings, extra) => {
    */
   const isBar = direction !== 'column' && direction === 'row'
 
-  const defaultMeaAxisType = secondMeaAxis !== null ? ['normal', 'normal'] : ['normal']
+  const meaAxisNum = thirdMeaAxis !== null ? 3 : secondMeaAxis !== null ? 2 : 1
 
+  const defaultMeaAxisType = new Array(meaAxisNum).fill('normal')
+
+  const defaultMeaAxisDigits = new Array(meaAxisNum).fill(0)
   /*
    * meaAxis对应measures的轴，dimAxis对应dimensions的轴
    * AxisLabelType，设置轴的标签格式化规则
    * AxisLabelDigits，设置轴标签格式化后保留几位小数
    */
   settings.meaAxisType = (isBar ? xAxisLabelType : yAxisLabelType) || defaultMeaAxisType
-  settings.meaAxisDigits = isBar ? xAxisLabelDigits : yAxisLabelDigits
+  settings.meaAxisDigits = (isBar ? xAxisLabelDigits : yAxisLabelDigits) || defaultMeaAxisDigits
   settings.meaAxisName = (isBar ? xAxisName : yAxisName) || []
   settings.dimAxisType = (isBar ? yAxisLabelType : xAxisLabelType) || 'category'
   settings.dimAxisDigits = isBar ? yAxisLabelDigits : xAxisLabelDigits
   settings.dimAxisName = (isBar ? yAxisName : xAxisName) || ''
 
-  // 如果设置了双Y轴secondMeaAxis，meaAxisType却设置两个，将双Y轴统一设置 meaAxisType
+  // 如果设置了双Y轴secondMeaAxis或者三Y轴thirdMeaAxis，meaAxisType却设置的数量与Y轴数量不符，将Y轴统一设置meaAxisType
   if (defaultMeaAxisType.length > settings.meaAxisType.length) {
     settings.meaAxisType = defaultMeaAxisType.fill(settings.meaAxisType[0])
   }
