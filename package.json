@@ -1,6 +1,6 @@
 {
   "name": "@xgfe/uix-charts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Vue2.x Charts Components Based ECharts4.x",
   "main": "lib/uix-charts.common.js",
   "typings": "types/index.d.ts",
