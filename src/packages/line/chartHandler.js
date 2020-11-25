@@ -4,7 +4,7 @@ import { isArray } from 'lodash-es'
 function getLineTooltip(settings, extra) {
   const {
     yAxisLabelType = ['normal', 'normal', 'normal'],
-    yAxisLabelDigits = 0,
+    yAxisLabelDigits = [0, 0, 0],
     secondMeaAxis = [],
     thirdMeaAxis = []
   } = settings
@@ -25,13 +25,16 @@ function getLineTooltip(settings, extra) {
         let showData = null
         const itemData = isArray(data) ? data[seriesIndex + 1] : data
         let type = yAxisLabelType[0] || 'normal'
+        let digit = yAxisLabelDigits[0] || 0
         if (~secondMeaAxis.indexOf(seriesName)) {
-          type = yAxisLabelType[1] || 'noraml'
+          type = yAxisLabelType[1] || 'normal'
+          digit = yAxisLabelDigits[1] || 0
         }
         if (~thirdMeaAxis.indexOf(seriesName)) {
           type = yAxisLabelType[2] || 'normal'
+          digit = yAxisLabelDigits[2] || 0
         }
-        showData = formatMeasure(type, itemData, yAxisLabelDigits)
+        showData = formatMeasure(type, itemData, digit)
         tpl.push(marker)
         tpl.push(`${seriesName}: ${showData}`)
         tpl.push('<br>')
@@ -121,10 +124,27 @@ function getLineMeaAxis(args) {
 
 // build label
 function getLineLabel(args) {
-  const { position = 'top', formatType = 'currency', formatDigits = 0, ...others } = args
+  let {
+    label = {},
+    yAxisLabelType = ['normal', 'normal', 'normal'],
+    yAxisLabelDigits = [0, 0, 0],
+    secondMeaAxis = [],
+    thirdMeaAxis = []
+  } = args
+  const { position = 'top', ...others } = label
 
   const formatter = params => {
-    const { value, seriesIndex } = params
+    const { value, seriesName, seriesIndex } = params
+    let formatType = yAxisLabelType[0] || 'normal'
+    let formatDigits = yAxisLabelDigits[0] || 0
+    if (~secondMeaAxis.indexOf(seriesName)) {
+      formatType = yAxisLabelType[1] || 'normal'
+      formatDigits = yAxisLabelDigits[1] || 0
+    }
+    if (~thirdMeaAxis.indexOf(seriesName)) {
+      formatType = yAxisLabelType[2] || 'normal'
+      formatDigits = yAxisLabelDigits[2] || 0
+    }
     // dataset formatter need shift the value
     value.shift()
     return formatMeasure(formatType, value[seriesIndex], formatDigits)
@@ -158,7 +178,6 @@ function getLineSeries(args) {
   const { data, settings } = args
   const { measures } = data
   const {
-    label = {},
     lineStyle = {},
     showSymbol = true,
     smooth = false,
@@ -179,7 +198,7 @@ function getLineSeries(args) {
     let seriesItem = {
       type: 'line',
       name,
-      label: getLineLabel(label),
+      label: getLineLabel(settings),
       lineStyle: getLineStyle(lineStyle),
       showSymbol,
       smooth,
