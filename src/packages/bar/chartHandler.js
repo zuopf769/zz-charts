@@ -3,8 +3,9 @@ import { getDataset, getStackMap, formatMeasure } from '@/utils'
 import { isArray } from 'lodash-es'
 
 // build tooltip
-function getBarTooltip(settings) {
-  const { tooltipFormatter, meaAxisType, secondMeaAxis = [], thirdMeaAxis = [], meaAxisDigits } = settings
+function getBarTooltip(settings, extra) {
+  const { meaAxisType, secondMeaAxis = [], thirdMeaAxis = [], meaAxisDigits } = settings
+  const { tooltipFormatter } = extra
   return {
     trigger: 'axis',
     // 坐标轴指示器，坐标轴触发有效
@@ -275,7 +276,7 @@ export const bar = (data, settings, extra) => {
   extra.chartType = 'bar'
   const dataset = !isEmptyData && getDataset(data, settings, extra)
 
-  const tooltip = tooltipVisible && getBarTooltip(settings)
+  const tooltip = tooltipVisible && getBarTooltip(settings, extra)
 
   const legend = legendVisible && getBarLegend(data, settings)
 

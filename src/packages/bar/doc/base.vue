@@ -1,5 +1,5 @@
 <template>
-  <uix-bar-chart :data="chartData" :height="340" />
+  <uix-bar-chart :data="chartData" :tooltip-formatter="tooltipFormatter" :height="340" />
 </template>
 
 <script>
@@ -16,6 +16,9 @@ export default {
           data: [256, 767, 1356, 2087, 803, 582, 432]
         }
       ]
+    }
+    this.tooltipFormatter = function () {
+      return '这是一个提示'
     }
   }
 }
