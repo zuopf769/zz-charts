@@ -112,6 +112,7 @@ export default {
   }
   h3 {
     font-size: 20px;
+    margin-top: 20px;
     margin-bottom: 20px;
   }
 
@@ -176,6 +177,10 @@ export default {
       text-align: start !important;
       text-align-last: start !important;
     }
+  }
+
+  ul ul > li {
+    list-style: circle;
   }
 
   .table {
