@@ -1,5 +1,5 @@
 {
-  "name": "@xgfe/uix-charts",
+  "name": "zz-charts",
   "version": "0.3.0",
   "description": "Vue2.x Charts Components Based ECharts4.x",
   "main": "lib/uix-charts.common.js",
@@ -28,12 +28,12 @@
   "homepage": "",
   "repository": {
     "type": "git",
-    "url": "ssh://git@git.sankuai.com/b2bwm/xgfe-vue-charts.git"
+    "url": "https://github.com/zuopf769/zz-charts.git"
   },
   "keywords": [
     "Vue",
     "ECharts",
-    "uix-charts"
+    "zz-charts"
   ],
   "license": "MIT",
   "dependencies": {
