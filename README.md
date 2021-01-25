@@ -5,18 +5,11 @@
 # 安装
 
 ```JavaScript
-npm i @xgfe/uix-charts echarts -S
+npm i zz-charts echarts -S
 ```
 
 # 文档
 
-[正式地址](http://w.sankuai.com/b2bwm/xgfe-vue-charts/index.html)
-[测试地址](http://uix-charts.bb.test.sankuai.com)
+
 
 # 联系我们
-
-[@zuopengfei02](https://x.sankuai.com/chat/1492070930?type=chat)
-
-[@yanghao15](https://x.sankuai.com/chat/1616660?type=chat)
-
-[@lipu06](https://x.sankuai.com/chat/1861379777?type=chat)
